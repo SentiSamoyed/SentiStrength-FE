@@ -71,8 +71,20 @@ export default {
 
       axios(params)
         .then(res => {
-          window.alert('请求成功')
-          this.$refs.AnalyseResult.$data.result = res.result
+          if (activeTabName === 'file') {
+            this.$refs.AnalyseResult.$data.result = res.result
+          } else if (activeTabName === 'text') {
+            let resStr = '情感值：'
+            resStr = resStr + res.val1 + ' ' + res.val2
+            if (res.val3 !== '' && res.val3 !== null && res.val3 !== undefined) {
+              resStr = resStr + ' ' + res.val3
+            }
+            resStr += '\n'
+            resStr += '分析解释: ' + res.explain + '\n'
+            this.$refs.AnalyseResult.$data.result = resStr
+          } else {
+            window.alert('未知错误')
+          }
         })
         .catch(err => {
           console.log(err)
