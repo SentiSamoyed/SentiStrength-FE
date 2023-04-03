@@ -14,7 +14,7 @@
           <el-option label='default' value='default' />
           <el-option label='binary' value='binary' />
           <el-option label='trinary' value='trinary' />
-          <el-option label='scope' value='scope' />
+          <el-option label='scale' value='scale' />
         </el-select>
       </el-form-item>
       <el-form-item label='显示分析解释'>
