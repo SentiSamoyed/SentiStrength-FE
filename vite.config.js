@@ -12,7 +12,14 @@ export default ({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return defineConfig({
     server: {
-      port: env.PORT
+      port: env.PORT,
+      proxy: {
+        '/api': {
+          target: env.VITE_BACKEND_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
     },
     plugins: [
       vue(),

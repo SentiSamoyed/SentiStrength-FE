@@ -6,28 +6,14 @@
       </div>
     </template>
 
-    <el-tabs v-model='activeTabName' :tab-position='"left"' style='height: 200px'>
-      <el-tab-pane label='语句' name='text'>
-        <el-form>
-          <span style='margin: 1rem'>输入单个语句：</span>
-          <el-form-item>
-            <slot name='text'>
-            </slot>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
+    <el-form>
+      <span style='margin: 1rem'>输入文本：</span>
+      <el-form-item>
+        <slot name='text'>
+        </slot>
+      </el-form-item>
+    </el-form>
 
-      <el-tab-pane label='文本' name='file'>
-        <el-form>
-          <span style='margin: 1rem'>输入一个文本的所有内容：</span>
-          <el-form-item>
-            <slot name='file'>
-            </slot>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-
-    </el-tabs>
     <div class='button-container'>
       <slot name='button' class='button'></slot>
     </div>
@@ -37,16 +23,8 @@
 <script>
 export default {
   name: 'AnalyseText',
-  props: {
-    label: {
-      type: String,
-      default: '输入语句'
-    }
-  },
   data() {
-    return {
-      activeTabName: 'text'
-    }
+    return {}
   },
   methods: {
     reset() {
