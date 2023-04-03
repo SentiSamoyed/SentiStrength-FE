@@ -80,7 +80,9 @@ export default {
               resStr = resStr + ' ' + res.val3
             }
             resStr += '\n'
-            resStr += '分析解释: ' + res.explain + '\n'
+            if (res.explain !== '' && res.explain !== null && res.explain !== undefined) {
+              resStr += '分析解释: ' + res.explain + '\n'
+            }
             this.$refs.AnalyseResult.$data.result = resStr
           } else {
             window.alert('未知错误')
