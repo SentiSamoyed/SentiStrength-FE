@@ -5,12 +5,7 @@
         <span>分析结果</span>
       </div>
     </template>
-
-    <span class='result'>
-
-      </span>
-
-    <slot name='skeleton'></slot>
+    <slot name='table'></slot>
 
   </el-card>
 </template>

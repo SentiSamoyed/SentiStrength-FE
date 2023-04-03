@@ -5,7 +5,7 @@
     <AnalyseText ref='AnalyseText'>
       <template #text>
         <el-input type='textarea' rows='4' placeholder='请输入文本' v-model='form.text'
-                  style='margin: 1rem; width: 400px' />
+                  style='margin: 1rem;' />
       </template>
       <template #button>
         <el-button type='primary' @click='submit'>提交</el-button>
@@ -13,8 +13,14 @@
     </AnalyseText>
 
     <AnalyseResult>
-      <template #skeleton>
-        <el-skeleton v-if='loading' animated />
+
+      <template #table>
+        <el-table :data='tableData' border v-loading='loading'>
+          <el-table-column prop='val1' label='Positive' width='180'></el-table-column>
+          <el-table-column prop='val2' label='Negative' width='180'></el-table-column>
+          <el-table-column prop='val3' label='Mode Value' width='180'></el-table-column>
+          <el-table-column prop='explain' label='Explain'></el-table-column>
+        </el-table>
       </template>
     </AnalyseResult>
   </main>
@@ -36,9 +42,10 @@ export default {
   data() {
     return {
       form: reactive({
-        text: '',
+        text: ''
       }),
-      loading: false
+      loading: false,
+      tableData: []
     }
   },
   methods: {
@@ -60,11 +67,15 @@ export default {
 
       axios(params)
         .then(res => {
-          console.log(res)
+          if (res.data.code !== 0) {
+            window.alert('请求失败' + '\n' + res.data.msg)
+            return
+          }
+          this.tableData = res.data.data
         })
         .catch(err => {
           console.log(err)
-          window.alert('请求失败' + '\n' + err)
+          window.alert('请求失败' + '\n' + err.message)
         }).finally(() => {
         this.loading = false
       })
