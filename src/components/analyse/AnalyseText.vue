@@ -5,7 +5,7 @@
     <template #header>
       <div class='card-header'>
         <div class='icon-text'>
-          <font-awesome-icon icon='fa-solid fa-file-lines' class='icon' />
+          <font-awesome-icon class='icon' icon='fa-solid fa-file-lines' />
           <span>分析内容</span>
         </div>
         <div></div>
@@ -21,7 +21,7 @@
     </el-form>
 
     <div class='button-container'>
-      <slot name='button' class='button'></slot>
+      <slot class='button' name='button'></slot>
     </div>
   </el-card>
 </template>
@@ -42,8 +42,8 @@ export default {
 
 <style scoped>
 .button-container {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .card-header {

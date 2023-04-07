@@ -17,10 +17,11 @@
             href='https://doi.org/10.1002/asi.21662'><em><span>Sentiment Strength Detection for the Social
                 Web</span></em></a><span> 于 2012 年发表。若您想细致的了解该工具，推荐优先阅读 </span><em><span>Sentiment Strength Detection in
               Short Informal Text</span></em><span> ，其中的描述更为详细。</span></li>
-          <li><span>该工具的官网地址为：</span><a href='http://sentistrength.wlv.ac.uk' target='_blank'
-                                                 class='url'>http://sentistrength.wlv.ac.uk</a><span>；</span></li>
+          <li><span>该工具的官网地址为：</span><a class='url' href='http://sentistrength.wlv.ac.uk'
+                                                 target='_blank'>http://sentistrength.wlv.ac.uk</a><span>；</span></li>
           <li><span>官网提供了该工具的原版 jar 包，各种使用手册，以及可以试运行的 demo
-            等。除此之外，它还罗列了与该工具有关的若干论文，并提供了工具开发过程中标注的数据集。若有任何疑问，可优先查看其官网。</span></li>
+            等。除此之外，它还罗列了与该工具有关的若干论文，并提供了工具开发过程中标注的数据集。若有任何疑问，可优先查看其官网。</span>
+          </li>
           <li><strong><span>该项目由反编译官网发布的 jar 包得来。</span></strong></li>
         </ul>
         <h3 id='我们在做什么'><span>我们在做什么？</span></h3>
@@ -40,7 +41,9 @@
           <li><span>and more...</span></li>
         </ul>
         <h3 id='你现在看到的是'><span>你现在看到的是</span></h3>
-        <p><span>这里是 SentiStrength 的 Web 前端界面，你可以在这里尝试使用 SentiStrength 分析某个语句或者多行语句的情绪。</span></p>
+        <p>
+          <span>这里是 SentiStrength 的 Web 前端界面，你可以在这里尝试使用 SentiStrength 分析某个语句或者多行语句的情绪。</span>
+        </p>
       </div>
     </div>
 

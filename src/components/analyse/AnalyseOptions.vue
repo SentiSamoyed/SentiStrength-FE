@@ -4,7 +4,7 @@
     <template #header>
       <div class='card-header'>
         <div class='icon-text'>
-          <font-awesome-icon icon='fa-solid fa-sliders' class='icon' />
+          <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
           <span>分析选项</span>
         </div>
         <el-button type='primary' @click='reset'>重置</el-button>
@@ -27,30 +27,30 @@
       <el-collapse>
         <el-collapse-item title='更多选项'>
           <div class='checkboxes'>
-            <el-checkbox class='checkbox' v-model='form.options.alwaysSplitWordsAtApostrophes'>总是在撇号处分词
+            <el-checkbox v-model='form.options.alwaysSplitWordsAtApostrophes' class='checkbox'>总是在撇号处分词
             </el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noBoosters'>不使用助推词</el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noNegatingPositiveFlipsEmotion'>不使用否定词反转情绪
+            <el-checkbox v-model='form.options.noBoosters' class='checkbox'>不使用助推词</el-checkbox>
+            <el-checkbox v-model='form.options.noNegatingPositiveFlipsEmotion' class='checkbox'>不使用否定词反转情绪
             </el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noNegatingNegativeNeutralisesEmotion'>
+            <el-checkbox v-model='form.options.noNegatingNegativeNeutralisesEmotion' class='checkbox'>
               不使用否定词中和消极词
             </el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noIdioms'>不使用习语</el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.questionsReduceNeg'>在问句中减少消极情感</el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noEmoticons'>不使用表情符号</el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.exclamations2'>感叹号分数加二</el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noMultiplePosWords'>不允许多个积极词增加积极情感
+            <el-checkbox v-model='form.options.noIdioms' class='checkbox'>不使用习语</el-checkbox>
+            <el-checkbox v-model='form.options.questionsReduceNeg' class='checkbox'>在问句中减少消极情感</el-checkbox>
+            <el-checkbox v-model='form.options.noEmoticons' class='checkbox'>不使用表情符号</el-checkbox>
+            <el-checkbox v-model='form.options.exclamations2' class='checkbox'>感叹号分数加二</el-checkbox>
+            <el-checkbox v-model='form.options.noMultiplePosWords' class='checkbox'>不允许多个积极词增加积极情感
             </el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noMultipleNegWords'>不允许多个消极词增加消极情感
+            <el-checkbox v-model='form.options.noMultipleNegWords' class='checkbox'>不允许多个消极词增加消极情感
             </el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noIgnoreBoosterWordsAfterNegatives'>
+            <el-checkbox v-model='form.options.noIgnoreBoosterWordsAfterNegatives' class='checkbox'>
               不忽略否定词后的助推词
             </el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noDictionary'>不使用字典纠正拼写</el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noDeleteExtraDuplicateLetters'>
+            <el-checkbox v-model='form.options.noDictionary' class='checkbox'>不使用字典纠正拼写</el-checkbox>
+            <el-checkbox v-model='form.options.noDeleteExtraDuplicateLetters' class='checkbox'>
               不删除单词中额外的重复字母
             </el-checkbox>
-            <el-checkbox class='checkbox' v-model='form.options.noMultipleLetters'>不允许重复单词</el-checkbox>
+            <el-checkbox v-model='form.options.noMultipleLetters' class='checkbox'>不允许重复单词</el-checkbox>
           </div>
 
           <el-form-item label='否定词的强度倍数' style='margin: 1rem 0'>

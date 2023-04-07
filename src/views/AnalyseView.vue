@@ -4,8 +4,8 @@
 
     <AnalyseText ref='AnalyseText'>
       <template #text>
-        <el-input type='textarea' :autosize='{ minRows: 4, maxRows: 10 }' placeholder='请输入文本' v-model='form.text'
-                  style='margin: 1rem;' />
+        <el-input v-model='form.text' :autosize='{ minRows: 4, maxRows: 10 }' placeholder='请输入文本' style='margin: 1rem;'
+                  type='textarea' />
       </template>
       <template #button>
         <el-button type='primary' @click='submit'>提交</el-button>
@@ -18,13 +18,13 @@
       </template>
 
       <template #table>
-        <el-table :data='tableData' :table-layout='"auto"' v-loading='loading' height='600px'>
-          <el-table-column prop='id' label='Id' width='40px' />
-          <el-table-column prop='text' label='Text'></el-table-column>
-          <el-table-column prop='val1' label='Positive' width='100px'></el-table-column>
-          <el-table-column prop='val2' label='Negative' width='100px'></el-table-column>
-          <el-table-column prop='val3' label='Mode Value' width='110px'></el-table-column>
-          <el-table-column prop='explain' label='Explain'></el-table-column>
+        <el-table v-loading='loading' :data='tableData' :table-layout='"auto"' height='600px'>
+          <el-table-column label='Id' prop='id' width='40px' />
+          <el-table-column label='Text' prop='text'></el-table-column>
+          <el-table-column label='Positive' prop='val1' width='100px'></el-table-column>
+          <el-table-column label='Negative' prop='val2' width='100px'></el-table-column>
+          <el-table-column label='Mode Value' prop='val3' width='110px'></el-table-column>
+          <el-table-column label='Explain' prop='explain'></el-table-column>
         </el-table>
       </template>
     </AnalyseResult>

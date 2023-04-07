@@ -3,7 +3,7 @@
     <template #header>
       <div class='card-header'>
         <div class='icon-text'>
-          <font-awesome-icon icon='fa-solid fa-table' class='icon' />
+          <font-awesome-icon class='icon' icon='fa-solid fa-table' />
           <span>分析结果</span>
         </div>
         <slot name='button'></slot>
@@ -22,13 +22,13 @@ export default {
 
 <style scoped>
 .card {
-  margin: 1rem 0;
+    margin: 1rem 0;
 }
 
 .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .icon-text {
