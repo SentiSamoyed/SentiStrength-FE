@@ -2,8 +2,11 @@
 
   <el-menu
     default-active='/'
-    class='el-menu-vertical-demo'
+    background-color='#242d3d'
+    text-color='#fff'
+    active-text-color='#ffd04b'
     router
+    style='height: 100%'
   >
     <div class='header'>
        <span class='header-text'>
@@ -11,7 +14,7 @@
        </span>
     </div>
     <el-menu-item index='/' class='menu-item'>
-      <font-awesome-icon icon='fa-solid fa-house-user' class='icon'/>
+      <font-awesome-icon icon='fa-solid fa-house-user' class='icon' />
       <span>主页</span>
     </el-menu-item>
     <el-menu-item index='/analyse' class='menu-item'>
@@ -25,10 +28,6 @@
 </script>
 
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-    height: 100%;
-    background: #242d3d;
-}
 
 .header {
     display: flex;
@@ -38,17 +37,12 @@
     color: white;
 }
 
-
 .menu-item {
-    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.menu-item:hover {
-    background: #354056;
-}
 
 .menu-item .icon {
     flex: 1;
