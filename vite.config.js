@@ -12,7 +12,7 @@ export default ({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return defineConfig({
     server: {
-      port: env.PORT,
+      port: 3000,
       proxy: {
         '/api': {
           target: env.VITE_BACKEND_URL,
