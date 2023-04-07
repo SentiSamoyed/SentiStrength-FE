@@ -1,0 +1,8 @@
+name: sentistrength
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
