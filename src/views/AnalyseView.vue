@@ -77,7 +77,7 @@ export default {
       axios(params)
         .then(res => {
           if (res.data.code !== 0) {
-            this.$message.error('请求失败' + '\n' + res.data.msg)
+            this.$message.error('请求失败: ' + res.data.msg)
             return
           }
           // set table data
@@ -89,7 +89,7 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          this.$message.error('请求失败' + '\n' + err.message)
+          this.$message.error('请求失败: ' + err.message)
         }).finally(() => {
         this.loading = false
       })
@@ -112,7 +112,7 @@ export default {
 
       csvExporter.generateCsv(this.tableData).catch(err => {
         console.log(err)
-        this.$message.error('导出失败' + '\n' + err.message)
+        this.$message.error('导出失败: ' + err.message)
       })
     }
 
