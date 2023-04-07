@@ -20,26 +20,26 @@ import NavigationView from '@/views/NavigationView.vue'</script>
 <style scoped>
 
 .main-container {
-  width: 100%;
+    width: 100%;
 }
 
 .content-container {
-  padding: 1rem 1rem 1rem 1rem;
-  margin: 1rem 1rem 1rem 1rem;
+    padding: 1rem 1rem 1rem 1rem;
+    margin: 1rem 1rem 1rem 1rem;
 }
 
 .el-aside {
-  width: 200px;
-  background-color: #d3dce6;
-  transition: var(--el-transition-all);
+    width: 200px;
+    background-color: #d3dce6;
+    transition: var(--el-transition-all);
 }
 
 .el-aside:hover {
-  box-shadow: var(--el-box-shadow);
+    box-shadow: var(--el-box-shadow);
 }
 
 .el-main {
-  padding: 2rem;
+    padding: 2rem;
 }
 
 </style>
