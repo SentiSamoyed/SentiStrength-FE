@@ -118,6 +118,7 @@ export default {
   methods: {
     reset() {
       Object.assign(this.$data, this.$options.data.call(this))
+      this.$message.success('已重置选项')
     }
   }
 }

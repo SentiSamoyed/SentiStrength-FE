@@ -85,7 +85,7 @@ export default {
             const targetObj = this.tableData[index]
             Object.assign(targetObj, { val1: item.val1, val2: item.val2, val3: item.val3, explain: item.explain })
           })
-
+          this.$message.success('请求成功')
         })
         .catch(err => {
           console.log(err)
@@ -98,19 +98,23 @@ export default {
       return text.split('\n')
     },
     exportCsv() {
-      const options = {
-        showLabels: true,
-        showTitle: false,
-        filename: 'sentistrength-result-' + this.$refs.AnalyseOptions.form.mode,
-        useTextFile: false,
-        useBom: true,
-        useKeysAsHeaders: false,
-        headers: ['id', 'text', 'val1', 'val2', 'val3', 'explain']
-      }
+      return new Promise(() => {
+        const options = {
+          showLabels: true,
+          showTitle: false,
+          filename: 'sentistrength-result-' + this.$refs.AnalyseOptions.form.mode,
+          useTextFile: false,
+          useBom: true,
+          useKeysAsHeaders: false,
+          headers: ['id', 'text', 'val1', 'val2', 'val3', 'explain']
+        }
 
-      const csvExporter = new ExportToCsv(options)
-
-      csvExporter.generateCsv(this.tableData).catch(err => {
+        const csvExporter = new ExportToCsv(options)
+        csvExporter.generateCsv(this.tableData)
+      }).then(() => {
+        this.$message.success('导出成功')
+        console.log('导出成功')
+      }).catch(err => {
         console.log(err)
         this.$message.error('导出失败: ' + err.message)
       })

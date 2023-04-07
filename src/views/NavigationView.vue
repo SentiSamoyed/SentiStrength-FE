@@ -11,9 +11,11 @@
        </span>
     </div>
     <el-menu-item index='/' class='menu-item'>
+      <font-awesome-icon icon='fa-solid fa-house-user' class='icon'/>
       <span>主页</span>
     </el-menu-item>
     <el-menu-item index='/analyse' class='menu-item'>
+      <font-awesome-icon icon='fa-solid fa-magnifying-glass-chart' class='icon' />
       <span>开始分析</span>
     </el-menu-item>
   </el-menu>
@@ -39,10 +41,21 @@
 
 .menu-item {
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .menu-item:hover {
     background: #354056;
+}
+
+.menu-item .icon {
+    flex: 1;
+}
+
+.el-menu-item span {
+    flex: 2;
 }
 
 .header-text {
