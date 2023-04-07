@@ -35,10 +35,10 @@
 
 </style>
 <script>
-import AnalyseOptions from '@/components/AnalyseOptions.vue'
+import AnalyseOptions from '@/components/analyse/AnalyseOptions.vue'
 import { reactive } from 'vue'
-import AnalyseText from '@/components/AnalyseText.vue'
-import AnalyseResult from '@/components/AnalyseResult.vue'
+import AnalyseText from '@/components/analyse/AnalyseText.vue'
+import AnalyseResult from '@/components/analyse/AnalyseResult.vue'
 import axios from 'axios'
 import { ExportToCsv } from 'export-to-csv'
 
@@ -77,8 +77,7 @@ export default {
       axios(params)
         .then(res => {
           if (res.data.code !== 0) {
-            window.alert('请求失败' + '\n' + res.data.msg)
-            this.loading = false
+            this.$message.error('请求失败: ' + res.data.msg)
             return
           }
           // set table data
@@ -86,11 +85,11 @@ export default {
             const targetObj = this.tableData[index]
             Object.assign(targetObj, { val1: item.val1, val2: item.val2, val3: item.val3, explain: item.explain })
           })
-
+          this.$message.success('请求成功')
         })
         .catch(err => {
           console.log(err)
-          window.alert('请求失败' + '\n' + err.message)
+          this.$message.error('请求失败: ' + err.message)
         }).finally(() => {
         this.loading = false
       })
@@ -99,21 +98,25 @@ export default {
       return text.split('\n')
     },
     exportCsv() {
-      const options = {
-        showLabels: true,
-        showTitle: false,
-        filename: 'sentistrength-result-' + this.$refs.AnalyseOptions.form.mode,
-        useTextFile: false,
-        useBom: true,
-        useKeysAsHeaders: false,
-        headers: ['id', 'text', 'val1', 'val2', 'val3', 'explain']
-      }
+      return new Promise(() => {
+        const options = {
+          showLabels: true,
+          showTitle: false,
+          filename: 'sentistrength-result-' + this.$refs.AnalyseOptions.form.mode,
+          useTextFile: false,
+          useBom: true,
+          useKeysAsHeaders: false,
+          headers: ['id', 'text', 'val1', 'val2', 'val3', 'explain']
+        }
 
-      const csvExporter = new ExportToCsv(options)
-
-      csvExporter.generateCsv(this.tableData).catch(err => {
+        const csvExporter = new ExportToCsv(options)
+        csvExporter.generateCsv(this.tableData)
+      }).then(() => {
+        this.$message.success('导出成功')
+        console.log('导出成功')
+      }).catch(err => {
         console.log(err)
-        window.alert('导出失败' + '\n' + err.message)
+        this.$message.error('导出失败: ' + err.message)
       })
     }
 

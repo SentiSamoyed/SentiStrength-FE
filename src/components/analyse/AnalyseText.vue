@@ -1,8 +1,14 @@
 <template>
-  <el-card>
+  <el-card
+    shadow='hover'
+  >
     <template #header>
       <div class='card-header'>
-        <span>分析内容</span>
+        <div class='icon-text'>
+          <font-awesome-icon icon='fa-solid fa-file-lines' class='icon' />
+          <span>分析内容</span>
+        </div>
+        <div></div>
       </div>
     </template>
 
@@ -40,7 +46,22 @@ export default {
   justify-content: flex-end;
 }
 
-.button {
-
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.icon-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-text span {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+}
+
 </style>
