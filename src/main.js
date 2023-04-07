@@ -12,12 +12,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faHouseUser, faMagnifyingGlassChart} from '@fortawesome/free-solid-svg-icons'
+import { faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable } from '@fortawesome/free-solid-svg-icons'
 
 const app = createApp(App)
 
 /* add icons to the library */
-library.add(faHouseUser, faMagnifyingGlassChart)
+library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable)
 
 
 app.use(router)

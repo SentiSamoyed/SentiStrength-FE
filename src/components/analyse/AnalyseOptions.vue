@@ -3,7 +3,10 @@
   <el-card class='card' shadow='hover'>
     <template #header>
       <div class='card-header'>
-        <span>分析选项</span>
+        <div class='icon-text'>
+          <font-awesome-icon icon='fa-solid fa-sliders' class='icon' />
+          <span>分析选项</span>
+        </div>
         <el-button type='primary' @click='reset'>重置</el-button>
       </div>
     </template>
@@ -82,9 +85,11 @@
 
 <script>
 import { reactive } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'AnalyseOptions',
+  components: { FontAwesomeIcon },
   data() {
     return {
       form: reactive({
@@ -149,4 +154,15 @@ el-form-item {
     width: 200px;
 }
 
+.icon-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-text span {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+}
 </style>

@@ -35,10 +35,10 @@
 
 </style>
 <script>
-import AnalyseOptions from '@/components/AnalyseOptions.vue'
+import AnalyseOptions from '@/components/analyse/AnalyseOptions.vue'
 import { reactive } from 'vue'
-import AnalyseText from '@/components/AnalyseText.vue'
-import AnalyseResult from '@/components/AnalyseResult.vue'
+import AnalyseText from '@/components/analyse/AnalyseText.vue'
+import AnalyseResult from '@/components/analyse/AnalyseResult.vue'
 import axios from 'axios'
 import { ExportToCsv } from 'export-to-csv'
 

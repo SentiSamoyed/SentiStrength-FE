@@ -2,7 +2,10 @@
   <el-card class='card' shadow='hover'>
     <template #header>
       <div class='card-header'>
-        <span>分析结果</span>
+        <div class='icon-text'>
+          <font-awesome-icon icon='fa-solid fa-table' class='icon' />
+          <span>分析结果</span>
+        </div>
         <slot name='button'></slot>
       </div>
     </template>
@@ -26,5 +29,17 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.icon-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-text span {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
 }
 </style>
