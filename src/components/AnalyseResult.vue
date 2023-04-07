@@ -3,6 +3,7 @@
     <template #header>
       <div class='card-header'>
         <span>分析结果</span>
+        <slot name='button'></slot>
       </div>
     </template>
     <slot name='table'></slot>
