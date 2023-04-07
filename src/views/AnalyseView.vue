@@ -15,7 +15,7 @@
     <AnalyseResult>
 
       <template #table>
-        <el-table :data='tableData' border v-loading='loading'>
+        <el-table :data='tableData' v-loading='loading' height='600px'>
           <el-table-column prop='val1' label='Positive' width='180'></el-table-column>
           <el-table-column prop='val2' label='Negative' width='180'></el-table-column>
           <el-table-column prop='val3' label='Mode Value' width='180'></el-table-column>
