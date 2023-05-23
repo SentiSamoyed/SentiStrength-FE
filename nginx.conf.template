@@ -12,6 +12,8 @@ http {
 
         location / {
             root /usr/share/nginx/html;
+            index index.html;
+	        try_files $uri $uri/ /index.html;
         }
         location /api/ {
             proxy_pass ${BACKEND_URL};
