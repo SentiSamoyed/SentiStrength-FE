@@ -21,6 +21,7 @@ export default ({ command, mode }) => {
         }
       }
     },
+    base: env.VITE_BASE_URL,
     plugins: [
       vue(),
       liveReload(['./src/**/*.vue', './src/**/*.js']),
