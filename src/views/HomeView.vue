@@ -3,8 +3,6 @@
 
 <template>
   <main>
-    <div class='typora-export-content'>
-
       <div id='write' class=''>
         <h1 id='sentistrength'><span>SentiStrength</span></h1>
         <h2 id='简介'><span>简介</span></h2>
@@ -45,7 +43,6 @@
           <span>这里是 SentiStrength 的 Web 前端界面，你可以在这里尝试使用 SentiStrength 分析某个语句或者多行语句的情绪。</span>
         </p>
       </div>
-    </div>
 
   </main>
 </template>
