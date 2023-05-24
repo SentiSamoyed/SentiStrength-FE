@@ -2,39 +2,34 @@
   <main>
 
     <!--未初始化项目时显示-->
-    <RepoInit ref='RepoInit' v-if='this.repo === ""'>
-      <template #button>
-        <el-button type='primary' @click='initRepo'>下一步</el-button>
-      </template>
+    <RepoInit>
     </RepoInit>
 
     <!--已初始化项目时显示-->
+    <RepoScore>
+    </RepoScore>
+
+    <RepoGraph/>
 
   </main>
 </template>
 <script>
 import RepoInit from '@/components/repo/RepoInit.vue'
-import apis from '@/apis'
+import RepoScore from '@/components/repo/RepoScore.vue'
+import RepoGraph from '@/components/repo/RepoGraph.vue'
 
 export default {
   name: 'RepoAnalyseView',
-  components: { RepoInit },
+  components: { RepoGraph, RepoScore, RepoInit },
   data() {
     return {
       // 初始化后的项目路径
-      repo: ''
+      repo: 'repo',
     }
   },
   methods: {
-    initRepo() {
-      let repoPath = this.$refs.RepoInit.form.repoPath
-      apis.initRepo(repoPath).then(res => {
-        this.repo = repoPath
-        this.$message.success('初始化成功')
-      }).catch(err => {
-        this.$message.error('初始化失败: ' + err)
-      })
-    }
+
+
   }
 }
 </script>

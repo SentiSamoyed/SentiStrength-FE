@@ -12,14 +12,24 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faFileLines, faHouseUser, faMagnifyingGlassChart, faSliders, faTable, faSearch } from '@fortawesome/free-solid-svg-icons'
+import {
+  faClock,
+  faCodeCompare,
+  faFileLines,
+  faHouseUser,
+  faMagnifyingGlassChart,
+  faPercent,
+  faSearch,
+  faSliders,
+  faTable
+} from '@fortawesome/free-solid-svg-icons'
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 
 const app = createApp(App)
 
 /* add icons to the library */
-library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable, faGithub, faSearch)
+library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable, faGithub, faSearch, faCodeCompare, faClock, faPercent)
 
 
 app.use(router)

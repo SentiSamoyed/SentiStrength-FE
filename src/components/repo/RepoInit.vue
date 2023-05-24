@@ -1,39 +1,50 @@
 <template>
   <el-card class='card' shadow='hover'>
-    <div class='card-header'>
-      <div class='icon-text'>
-        <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
-        <span>初始化项目</span>
+    <template #header>
+      <div class='card-header'>
+        <div class='icon-text'>
+          <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+          <span>初始化项目</span>
+        </div>
       </div>
-      <el-button type='primary' @click='reset'>重置</el-button>
-    </div>
+    </template>
 
-    <el-input placeholder='请输入项目名称' v-model='form.repoPath' style='width: 20rem; margin: 1rem 0'>
-      <template #prefix>
-        <font-awesome-icon icon='fa-solid fa-search' />
-      </template>
-    </el-input>
+    <el-form :model='form' label-width='200px'>
+      <el-form-item label='项目名称'>
+        <el-input placeholder='请输入项目名称' clearable v-model='form.repoPath' style='width: 20.5%'>
+          <template #prefix>
+            <font-awesome-icon icon='fa-solid fa-search' />
+          </template>
+        </el-input>
+      </el-form-item>
+    </el-form>
 
     <div class='button-container'>
-      <slot class='button' name='button'></slot>
+      <el-button type='primary' @click='initRepo()'>下一步</el-button>
     </div>
   </el-card>
 </template>
 
 <script>
+import apis from '@/apis'
+
 export default {
   name: 'RepoInit',
   data() {
     return {
       form: {
         repoPath: ''
-      }
+      },
     }
   },
   methods: {
-    reset() {
-
-      this.$message.success('已重置选项')
+    initRepo() {
+      apis.initRepo(this.form.repoPath).then(res => {
+        this.$parent.$data.repo = this.form.repoPath
+        this.$message.success('初始化成功')
+      }).catch(err => {
+        this.$message.error('初始化失败: ' + err)
+      })
     }
   }
 }

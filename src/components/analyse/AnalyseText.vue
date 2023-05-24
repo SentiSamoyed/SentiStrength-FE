@@ -31,11 +31,6 @@ export default {
   name: 'AnalyseText',
   data() {
     return {}
-  },
-  methods: {
-    reset() {
-      Object.assign(this.$data, this.$options.data.call(this))
-    }
   }
 }
 </script>
