@@ -9,13 +9,20 @@
       </div>
     </template>
 
-    <el-form :model='form' label-width='200px'>
-      <el-form-item label='项目名称'>
-        <el-input placeholder='请输入项目名称' clearable v-model='form.repoPath' style='width: 20.5%'>
+    <el-form :model='form' ref='form' :rules='formRules' label-width='200px'>
+      <el-form-item label='项目名称' prop='selectedRepoName'>
+        <el-autocomplete
+          v-model='form.selectedRepoName'
+          :fetch-suggestions='querySearch'
+          placeholder='请输入项目名称'
+          @select='handleSelect'
+          @change='handleChange'
+        >
           <template #prefix>
             <font-awesome-icon icon='fa-solid fa-search' />
           </template>
-        </el-input>
+        </el-autocomplete>
+
       </el-form-item>
     </el-form>
 
@@ -26,6 +33,7 @@
 </template>
 
 <script>
+
 import apis from '@/apis'
 
 export default {
@@ -33,17 +41,135 @@ export default {
   data() {
     return {
       form: {
-        repoPath: ''
+        selectedRepoName: ''
       },
+      formRules: {
+        selectedRepoName: [
+          { required: true, message: '请输入项目名称', trigger: 'blur' },
+          { pattern: /^[\w-]+\/[\w-]+$/, message: '请输入完整的项目名称，如：owner/repo' }
+        ]
+      },
+      repo: {
+        owner: '',
+        name: ''
+      },
+      loading: false,    // 是否正在加载数据
+      dataLoaded: false, // 数据是否加载完成
+      maxAttempts: 15,   // 最大轮询次数
+      attemptCount: 0    // 当前轮询次数
     }
   },
   methods: {
+    querySearch(queryString, cb) {
+      let repoList = this.$parent.$data.repoList
+      let repoNameList = repoList.map(item => {
+        return {
+          id: item.id,
+          value: item.fullName
+        }
+      })
+      this.$log.debug('current repo name list: ' + repoNameList)
+      let suggestions = repoNameList.filter(item => item.value.includes(queryString))
+      this.$log.debug('suggestions: ' + suggestions)
+      cb(suggestions)
+    }
+    ,
+    handleSelect(item) {
+      this.selectedRepoName = item.value
+      this.$log.info('selected repo path: ' + this.form.selectedRepoName)
+    }
+    ,
+    handleChange(item) {
+      this.selectedRepoName = item.value
+      this.$log.info('input repo path: ' + this.form.selectedRepoName)
+    },
+    // 设置 repo owner 和 repo name
+    setRepo(repoFullName) {
+      let repoInfo = repoFullName.match(/^([\w-]+)\/([\w-]+)$/)
+      this.repo.owner = repoInfo[1]
+      this.repo.name = repoInfo[2]
+    },
+    // 设置父组件的 repo 信息
+    setParentRepo() {
+      this.$parent.$data.repo = this.repo
+    },
     initRepo() {
-      apis.initRepo(this.form.repoPath).then(res => {
-        this.$parent.$data.repo = this.form.repoPath
-        this.$message.success('初始化成功')
+      // 检查校验规则
+      this.$refs.form.validate(valid => {
+        if (!valid) {
+          this.$message.error('请检查输入项')
+          return
+        }
+      })
+
+      let repoList = this.$parent.$data.repoList
+      let initialized = repoList.filter(item => item.fullName === this.selectedRepoName).length > 0
+
+      this.setRepo(this.form.selectedRepoName)
+
+      // 已初始化
+      if (initialized) {
+        this.setParentRepo()
+        this.$message.success('该项目已经初始化')
+        return
+      }
+
+      // 未初始化
+      this.$log.info('需要初始化的 repo fullname: ' + this.form.selectedRepoName)
+      this.$messageBox.confirm('确认初始化该项目？', '未初始化项目', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'info'
+      }).then(() => {
+        this.$log.info('确认初始化项目：' + this.form.selectedRepoName)
+        // 初始化项目
+        this.fetchData()
+      }).catch(() => {
+        this.$log.info('取消初始化项目：' + this.form.selectedRepoName)
+      })
+    }
+    ,
+    fetchData() {
+      this.loading = true    // 显示加载圈
+      this.attemptCount = 0  // 重置轮询计数器
+      this.pollData() // 开始轮询数据
+    }
+    ,
+    pollData() {
+      // 达到最大轮询次数，停止轮询
+      if (this.attemptCount >= this.maxAttempts) {
+        this.$log.error('轮询超时')
+        this.$message.error('请求超时')
+        this.loading = false
+        return
+      }
+
+      apis.initRepo(this.repo.owner, this.repo.name).then(res => {
+        let data = res.data
+        this.$log.debug('轮询中...次数' + this.attemptCount)
+        this.$log.info('轮询结果：' + data)
+        if (data.data === 0) {
+          // 未初始化完成，继续轮询
+          setTimeout(this.pollData, 2000)
+          this.attemptCount++
+        } else if (data.data === 1) {
+          // 初始化完成，停止轮询
+          this.$log.info('轮询完成')
+          this.loading = false
+          this.dataLoaded = true
+          this.setParentRepo()
+          this.$message.success('初始化成功')
+        } else if (data.data === 2) {
+          // repo 不存在
+          this.$log.error('Repo 不存在')
+          this.$message.error('该仓库不存在')
+        } else if (data.data === 3) {
+          this.$log.error('Repo 不存在 Issues')
+          this.$message.error('该仓库不存在 Issues')
+        }
       }).catch(err => {
-        this.$message.error('初始化失败: ' + err)
+        this.$log.error('请求失败: ' + err)
+        this.$message.error('请求失败')
       })
     }
   }

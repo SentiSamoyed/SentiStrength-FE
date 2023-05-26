@@ -51,14 +51,36 @@
       </el-form-item>
     </el-form>
 
+    <div id='container'/>
+
   </el-card>
 </template>
 
 <script>
 import apis from '@/apis'
+import { Line } from '@antv/g2plot'
 
 export default {
   name: 'RepoGraph',
+  mounted() {
+    const data = [
+      { year: '2012', value: 15 },
+      { year: '2013', value: 20 },
+      { year: '2014', value: -6 },
+      { year: '2015', value: -10 },
+      { year: '2016', value: 5 },
+      { year: '2017', value: 15 },
+      { year: '2018', value: 25 },
+      { year: '2019', value: 30 },
+      { year: '2020', value: 40 }
+    ]
+    const line = new Line('container', {
+      data,
+      xField: 'year',
+      yField: 'value'
+    })
+    line.render()
+  },
   data() {
     return {
       form: {},
@@ -85,7 +107,6 @@ export default {
     },
     getRepoGraph() {
       apis.getRepoGraph(this.$parent.$data.repo, this.xAxis).then(res => {
-        this.graphList = res.data
         this.$message.success('获取成功')
       }).catch(err => {
         this.$message.error('获取失败: ' + err)

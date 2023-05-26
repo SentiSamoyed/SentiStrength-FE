@@ -9,7 +9,7 @@
     <RepoScore>
     </RepoScore>
 
-    <RepoGraph/>
+    <RepoGraph />
 
   </main>
 </template>
@@ -17,19 +17,36 @@
 import RepoInit from '@/components/repo/RepoInit.vue'
 import RepoScore from '@/components/repo/RepoScore.vue'
 import RepoGraph from '@/components/repo/RepoGraph.vue'
+import apis from '@/apis'
 
 export default {
   name: 'RepoAnalyseView',
   components: { RepoGraph, RepoScore, RepoInit },
   data() {
     return {
-      // 初始化后的项目路径
-      repo: 'repo',
+      // 初始化后的项目信息
+      repo: {
+        owner: '',
+        name: ''
+      },
+      repoList: []
     }
   },
-  methods: {
-
-
-  }
+  mounted() {
+    apis.getRepoList().then(res => {
+      let data = res.data
+      if (data.code === 0) {
+        this.$log.info('Get repo list: ', data.data)
+        this.repoList = data.data
+      } else {
+        this.$log.error('Get repo list failed: ', data.msg)
+        this.$message.error('获取项目列表失败: ' + data.msg)
+      }
+    }).catch(err => {
+      this.$log.error('Get repo list failed: ', err)
+      this.$message.error('获取项目列表失败: ' + err)
+    })
+  },
+  methods: {}
 }
 </script>
