@@ -1,15 +1,19 @@
 <template>
   <main>
 
+    <!--测试用-->
+    <span>owner: {{ repo.owner }}</span>
+    <span>name: {{ repo.name }}</span>
+
     <!--未初始化项目时显示-->
-    <RepoInit>
+    <RepoInit ref='RepoInit' v-if='repo.owner === ""'>
     </RepoInit>
 
     <!--已初始化项目时显示-->
-    <RepoScore>
+    <RepoScore v-if='repo.owner !== ""'>
     </RepoScore>
 
-    <RepoGraph />
+    <RepoGraph v-if='repo.owner !== ""' />
 
   </main>
 </template>

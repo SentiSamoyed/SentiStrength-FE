@@ -30,7 +30,7 @@ const api = {
   getRepoInfo: (owner, name) => axios.get(buildUrl(endpoints.getRepoInfo, { owner: owner, name: name })),
   getRepoIssues: (owner, name) => axios.get(buildUrl(endpoints.getRepoIssues, { owner, name })),
   getRepoReleases: (owner, name) => axios.get(buildUrl(endpoints.getRepoReleases, { owner, name })),
-  initRepo: (owner, name) => axios.get(buildUrl(endpoints.initRepo, { owner: owner, name: name })),
+  initRepo: (owner, name) => axios.post(buildUrl(endpoints.initRepo, { owner: owner, name: name })),
   getRepoTendency: (owner, name, granularity) => axios.get(buildUrl(endpoints.getRepoTendency, {
     owner,
     name
@@ -38,7 +38,7 @@ const api = {
   getRepoTotal: (owner, name, releaseTags) => axios.post(buildUrl(endpoints.getRepoTotal, {
     owner,
     name
-  }), releaseTags),
+  }), {releaseTags: releaseTags}),
   getRepoPieChart: (owner, name, from, to) => axios.get(buildUrl(endpoints.getRepoPieChart, {
     owner,
     name

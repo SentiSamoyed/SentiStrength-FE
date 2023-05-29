@@ -9,17 +9,24 @@
       </div>
     </template>
 
+    <div>
+      <span>项目ID：{{ this.repoInfo.id }}</span>
+      <span>项目名称：{{ this.repoInfo.fullName }}</span>
+      <span>项目地址：{{ this.repoInfo.htmlUrl }}</span>
+      <span>上次更新时间：{{ this.repoInfo.lastUpdate }}</span>
+    </div>
+
     <el-form :model='form' label-width='200px'>
       <el-form-item label='版本'>
         <el-select
-          v-model='this.selectedVersions'
+          v-model='this.form.selectedVersions'
           multiple
           filterable
           clearable
           placeholder='请选择版本'
         >
           <template #prefix>
-            <font-awesome-icon icon="fa-solid fa-code-compare" />
+            <font-awesome-icon icon='fa-solid fa-code-compare' />
           </template>
           <el-option
             v-for='item in this.versions'
@@ -27,6 +34,15 @@
             :label='item.label'
             :value='item.value'
           >
+            <span style='float: left'>{{ item.label }}</span>
+            <span
+              style='
+          float: right;
+          color: var(--el-text-color-secondary);
+          font-size: 13px;
+        '
+            >{{ item.time }}</span
+            >
           </el-option>
         </el-select>
       </el-form-item>
@@ -34,8 +50,8 @@
 
 
     <div>
-      <span>平均分值：{{repoScore}}</span>
-      <span>分值总和：{{repoScore}}</span>
+      <span>平均分值：{{ repoScore }}</span>
+      <span>分值总和：{{ repoScore }}</span>
     </div>
     <div class='button-container'>
       <el-button type='primary' @click='getRepoScore'>提交</el-button>
@@ -51,30 +67,73 @@ export default {
   name: 'RepoScore',
   data() {
     return {
-      form: {},
-      selectedVersions: [],
-      versions: [
-        {
-          value: '1.0.0',
-          label: '1.0.0'
-        },
-        {
-          value: '1.0.1',
-          label: '1.0.1'
-        },
-        {
-          value: '1.0.2',
-          label: '1.0.2'
-        }
-      ],
-      repoScore: 0,
+      currRepo: {
+        owner: '',
+        name: ''
+      },
+      form: {
+        selectedVersions: []
+      },
+      repoInfo: {
+        id: -1,
+        owner: '',
+        name: '',
+        fullName: '',
+        htmlUrl: '',
+        lastUpdate: 0
+      },
+      versions: [],
+      repoTotal: {
+        sum: 0,
+        count: 0,
+        avg: 0,
+        posCnt: 0,
+        posRatio: 0,
+        negCnt: 0,
+        negRatio: 0
+      }
     }
+  },
+  mounted() {
+    this.currRepo = this.$parent.$data.repo
+    apis.getRepoInfo(this.currRepo.owner, this.currRepo.name).then(res => {
+      this.repoInfo = res.data.data
+    }).catch(err => {
+      this.$message.error('获取仓库信息异常: ' + err)
+    })
+
+    apis.getRepoReleases(this.currRepo.owner, this.currRepo.name).then(res => {
+      let releases = res.data.data
+
+      this.$log.debug(releases)
+      releases.reverse()
+      releases.forEach(release => {
+        this.versions.push({
+          label: release.tagName,
+          value: release.tagName,
+          time: new Date(release.createdAt).toDateString()
+        })
+      })
+      //   加入 No release Tag 到版本列表最前面
+      this.versions.push({
+        label: 'No release Tag',
+        value: 'No release Tag',
+        time: 'Repo Created Date'
+      })
+    }).catch(err => {
+      this.$message.error('获取仓库版本异常: ' + err)
+    })
+
   },
   methods: {
     getRepoScore() {
-      let selectedVersions = this.selectedVersions
-      apis.getRepoScore(this.$parent.$data.repo, selectedVersions).then(res => {
-
+      let releaseTags = this.form.selectedVersions
+      apis.getRepoTotal(this.currRepo.owner, this.currRepo.name, releaseTags).then(res => {
+        let data = res.data.data
+        Object.keys(this.repoTotal).forEach(key => {
+          this.repoTotal[key] = data[key]
+        })
+        this.$log.debug(this.repoTotal)
         this.$message.success('请求成功')
       }).catch(err => {
         this.$message.error('请求失败: ' + err)
