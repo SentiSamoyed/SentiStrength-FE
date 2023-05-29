@@ -36,10 +36,10 @@
 
 </style>
 <script>
-import AnalyseOptions from '@/components/analyse/AnalyseOptions.vue'
+import AnalyseOptions from '@/components/text/TextOptions.vue'
 import { reactive } from 'vue'
-import AnalyseText from '@/components/analyse/AnalyseText.vue'
-import AnalyseResult from '@/components/analyse/AnalyseResult.vue'
+import AnalyseText from '@/components/text/TextInput.vue'
+import AnalyseResult from '@/components/text/TextResult.vue'
 import { ExportToCsv } from 'export-to-csv'
 import apis from '@/apis'
 
