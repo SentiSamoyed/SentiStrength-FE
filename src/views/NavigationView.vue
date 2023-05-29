@@ -3,7 +3,7 @@
   <el-menu
     active-text-color='#ffd04b'
     background-color='#242d3d'
-    default-active='/'
+    :default-active='this.$route.path'
     router
     style='height: 100%'
     text-color='#fff'
@@ -19,12 +19,16 @@
     </el-menu-item>
     <el-menu-item class='menu-item' index='/analyse'>
       <font-awesome-icon class='icon' icon='fa-solid fa-magnifying-glass-chart' />
-      <span>开始分析</span>
+      <span>文本分析</span>
+    </el-menu-item>
+    <el-menu-item class='menu-item' index='/repo'>
+      <font-awesome-icon class='icon' icon='fa-brands fa-github' />
+      <span>项目分析</span>
     </el-menu-item>
   </el-menu>
 </template>
 
-<script lang='ts' setup>
+<script>
 </script>
 
 <style>

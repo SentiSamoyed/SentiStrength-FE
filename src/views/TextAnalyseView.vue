@@ -4,7 +4,8 @@
 
     <AnalyseText ref='AnalyseText'>
       <template #text>
-        <el-input v-model='form.text' :autosize='{ minRows: 4, maxRows: 10 }' placeholder='请输入文本' style='margin: 1rem;'
+        <el-input v-model='form.text' :autosize='{ minRows: 4, maxRows: 10 }' placeholder='请输入文本'
+                  style='margin: 1rem;'
                   type='textarea' />
       </template>
       <template #button>
@@ -39,8 +40,8 @@ import AnalyseOptions from '@/components/analyse/AnalyseOptions.vue'
 import { reactive } from 'vue'
 import AnalyseText from '@/components/analyse/AnalyseText.vue'
 import AnalyseResult from '@/components/analyse/AnalyseResult.vue'
-import axios from 'axios'
 import { ExportToCsv } from 'export-to-csv'
+import apis from '@/apis'
 
 export default {
   name: 'HomeView',
@@ -67,14 +68,8 @@ export default {
         explain: this.$refs.AnalyseOptions.form.explain,
         options: this.$refs.AnalyseOptions.form.options
       }
-      const params = {
-        url: '/api/sentiment/analysis/text',
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        data: data
-      }
 
-      axios(params)
+      apis.sentimentAnalysisText(data)
         .then(res => {
           if (res.data.code !== 0) {
             this.$message.error('请求失败: ' + res.data.msg)
