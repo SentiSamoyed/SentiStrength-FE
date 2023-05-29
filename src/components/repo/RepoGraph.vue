@@ -6,7 +6,6 @@
           <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
           <span>趋势图</span>
         </div>
-        <el-button type='primary' @click='reset()'>重置</el-button>
       </div>
     </template>
 
@@ -17,6 +16,7 @@
           filterable
           clearable
           placeholder='请选择时间粒度'
+          @change='updateXAxis'
         >
           <template #prefix>
             <font-awesome-icon icon='fa-solid fa-clock' />
@@ -36,6 +36,7 @@
           filterable
           clearable
           placeholder='请选择纵坐标'
+          @change='updateYAxis'
         >
           <template #prefix>
             <font-awesome-icon icon='fa-solid fa-percent' />
@@ -51,7 +52,7 @@
       </el-form-item>
     </el-form>
 
-    <div id='container'/>
+    <div id='tendency-container' />
 
   </el-card>
 </template>
@@ -62,55 +63,99 @@ import { Line } from '@antv/g2plot'
 
 export default {
   name: 'RepoGraph',
-  mounted() {
-    const data = [
-      { year: '2012', value: 15 },
-      { year: '2013', value: 20 },
-      { year: '2014', value: -6 },
-      { year: '2015', value: -10 },
-      { year: '2016', value: 5 },
-      { year: '2017', value: 15 },
-      { year: '2018', value: 25 },
-      { year: '2019', value: 30 },
-      { year: '2020', value: 40 }
-    ]
-    const line = new Line('container', {
-      data,
-      xField: 'year',
-      yField: 'value'
-    })
-    line.render()
+  async mounted() {
+    this.currRepo = this.$parent.$data.repo
+    await this.initTendencyGraph()
   },
   data() {
     return {
+      currRepo: {
+        owner: '',
+        name: ''
+      },
       form: {},
       xAxisEnum: {
         'month': '月',
-        'season': '季',
+        'quarter': '季',
         'year': '年',
-        'version': '版本'
+        'release': '版本'
       },
       yAxisEnum: {
         'ratio': '正负比例',
-        'average': '平均分值',
+        'avg': '平均分值',
         'sum': '分值总和'
       },
-      xAxis: '',
-      yAxis: '',
-      graphList: []
+      xAxis: 'month',
+      yAxis: 'avg',
+      graphList: {
+        year: {},
+        quarter: {},
+        month: {},
+        release: {}
+      },
+      plot: null
     }
   },
   methods: {
-    reset() {
-      Object.assign(this.$data, this.$options.data.call(this))
-      this.$message.success('已重置选项')
+    async getRepoTendency() {
+      for (const key of Object.keys(this.graphList)) {
+        await apis.getRepoTendency(this.currRepo.owner, this.currRepo.name, key.toString()).then(res => {
+          this.graphList[key] = res.data.data
+        }).catch(err => {
+          this.$message.error('获取趋势图失败: ', err)
+          this.$log.error(err)
+        })
+      }
+      this.$log.debug('getRepoTendency() result graphList: ', this.graphList)
     },
-    getRepoGraph() {
-      apis.getRepoGraph(this.$parent.$data.repo, this.xAxis).then(res => {
-        this.$message.success('获取成功')
-      }).catch(err => {
-        this.$message.error('获取失败: ' + err)
+    async initTendencyGraph() {
+      await this.getRepoTendency()
+      const line = new Line('tendency-container', {
+        data: this.graphList[this.xAxis],
+        xField: 'milestone',
+        yField: this.yAxis
       })
+      this.plot = line
+      line.render()
+    },
+    updateYAxis() {
+      if (this.yAxis === 'avg' || this.yAxis === 'sum') {
+        this.plot.update({
+          data: this.graphList[this.xAxis],
+          xField: 'milestone',
+          yField: this.yAxis
+        })
+      } else if (this.yAxis === 'ratio') {
+        let data = []
+        this.graphList[this.xAxis].forEach(item => {
+          data.push({
+            milestone: item.milestone,
+            ratio: item.posRatio,
+            type: 'pos'
+          })
+          data.push({
+            milestone: item.milestone,
+            ratio: item.negRatio,
+            type: 'neg'
+          })
+        })
+        this.$log.debug('updateYAxis data: ', data)
+        this.plot.update({
+          data: data,
+          xField: 'milestone',
+          yField: 'ratio',
+          seriesField: 'type'
+        })
+      }
+    },
+    updateXAxis() {
+      this.plot.update(
+        {
+          data: this.graphList[this.xAxis],
+          xField: 'milestone',
+          yField: this.yAxis
+        })
+      this.updateYAxis()
     }
   }
 }
