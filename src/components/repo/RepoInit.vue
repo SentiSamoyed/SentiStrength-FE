@@ -66,9 +66,9 @@ export default {
           value: item.fullName
         }
       })
-      this.$log.debug('current repo name list: ' + repoNameList)
+      this.$log.debug('current repo name list: ', repoNameList)
       let suggestions = repoNameList.filter(item => item.value.includes(queryString, 0))
-      this.$log.debug('suggestions: ' + suggestions)
+      this.$log.debug('suggestions: ', suggestions)
       cb(suggestions)
     },
     // 设置 repo owner 和 repo name
@@ -87,7 +87,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (!valid) {
           this.$message.error('请检查输入项')
-          return
+
         }
       })
 
@@ -104,17 +104,17 @@ export default {
       }
 
       // 未初始化
-      this.$log.info('需要初始化的 repo fullname: ' + this.form.selectedRepoName)
+      this.$log.info('需要初始化的 repo 全名: ', this.form.selectedRepoName)
       this.$messageBox.confirm('确认初始化该项目？', '未初始化项目', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'info'
       }).then(() => {
-        this.$log.info('确认初始化项目：' + this.form.selectedRepoName)
+        this.$log.info('确认初始化项目：', this.form.selectedRepoName)
         // 初始化项目
         this.fetchData()
       }).catch(() => {
-        this.$log.info('取消初始化项目：' + this.form.selectedRepoName)
+        this.$log.info('取消初始化项目：', this.form.selectedRepoName)
       })
     },
     fetchData() {
@@ -125,7 +125,7 @@ export default {
     async pollData() {
       try {
         while (true) {
-          console.log(this.attemptCount)
+          this.$log.debug('轮询次数: ', this.attemptCount)
           // 达到最大轮询次数，停止轮询
           if (this.attemptCount >= this.maxAttempts) {
             this.$log.error('轮询超时')
@@ -136,9 +136,8 @@ export default {
           const res = await apis.initRepo(this.repo.owner, this.repo.name)
           let data = res.data
 
-          this.$log.debug('轮询中...次数' + this.attemptCount)
-          this.$log.info('轮询结果：')
-          this.$log.info(data)
+          this.$log.debug('轮询中...次数', this.attemptCount)
+          this.$log.debug('轮询结果：', data)
 
           if (data === 0) {
             // 未初始化完成，继续轮询
@@ -147,7 +146,7 @@ export default {
             continue
           } else if (data.data === 1) {
             // 初始化完成，停止轮询
-            this.$log.info('轮询完成')
+            this.$log.debug('轮询完成')
             this.setParentRepo()
             this.$message.success('初始化成功')
           } else if (data.data === 2) {

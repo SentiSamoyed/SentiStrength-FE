@@ -10,16 +10,16 @@
     </template>
 
     <div>
-      <span>项目ID：{{ this.repoInfo.id }}</span>
-      <span>项目名称：{{ this.repoInfo.fullName }}</span>
-      <span>项目地址：{{ this.repoInfo.htmlUrl }}</span>
-      <span>上次更新时间：{{ this.repoInfo.lastUpdate }}</span>
+      <span>项目ID：{{ this.repoInfo.id }}</span><br />
+      <span>项目名称：{{ this.repoInfo.fullName }}</span><br />
+      <span>项目地址：{{ this.repoInfo.htmlUrl }}</span><br />
+      <span>上次更新时间：{{ this.repoInfo.lastUpdate }}</span><br />
     </div>
 
     <el-form :model='form' label-width='200px'>
       <el-form-item label='版本'>
         <el-select
-          v-model='this.form.selectedVersions'
+          v-model='this.form.selectedTags'
           multiple
           filterable
           clearable
@@ -50,12 +50,20 @@
 
 
     <div>
-      <span>平均分值：{{ repoScore }}</span>
-      <span>分值总和：{{ repoScore }}</span>
+      <span>平均分值：{{ this.repoTotal.avg }}</span><br />
+      <span>分值总和：{{ this.repoTotal.sum }}</span><br />
+      <span>总条目数：{{ this.repoTotal.count }}</span><br />
+      <span>分值平均值：{{ this.repoTotal.avg }}</span><br />
+      <span>正向分值总数：{{ this.repoTotal.posCnt }}</span><br />
+      <span>正向分值占比：{{ this.repoTotal.posRatio }}</span><br />
+      <span>负向分值总数：{{ this.repoTotal.negCnt }}</span><br />
+      <span>负向分值占比：{{ this.repoTotal.negRatio }}</span><br />
     </div>
     <div class='button-container'>
-      <el-button type='primary' @click='getRepoScore'>提交</el-button>
+      <el-button type='primary' @click='getRepoScore()'>提交</el-button>
     </div>
+
+    <div id='pie-container' />
   </el-card>
 
 </template>
@@ -72,7 +80,7 @@ export default {
         name: ''
       },
       form: {
-        selectedVersions: []
+        selectedTags: []
       },
       repoInfo: {
         id: -1,
@@ -82,6 +90,7 @@ export default {
         htmlUrl: '',
         lastUpdate: 0
       },
+      releases: [],
       versions: [],
       repoTotal: {
         sum: 0,
@@ -105,8 +114,9 @@ export default {
     apis.getRepoReleases(this.currRepo.owner, this.currRepo.name).then(res => {
       let releases = res.data.data
 
-      this.$log.debug(releases)
+      this.$log.debug('getRepoReleases: ', releases)
       releases.reverse()
+      this.releases = releases
       releases.forEach(release => {
         this.versions.push({
           label: release.tagName,
@@ -114,7 +124,7 @@ export default {
           time: new Date(release.createdAt).toDateString()
         })
       })
-      //   加入 No release Tag 到版本列表最前面
+      //   加入 No release Tag 到版本列表最后面
       this.versions.push({
         label: 'No release Tag',
         value: 'No release Tag',
@@ -127,7 +137,7 @@ export default {
   },
   methods: {
     getRepoScore() {
-      let releaseTags = this.form.selectedVersions
+      let releaseTags = this.form.selectedTags
       apis.getRepoTotal(this.currRepo.owner, this.currRepo.name, releaseTags).then(res => {
         let data = res.data.data
         Object.keys(this.repoTotal).forEach(key => {
@@ -138,6 +148,34 @@ export default {
       }).catch(err => {
         this.$message.error('请求失败: ' + err)
       })
+      this.getRepoPieChart()
+    },
+    async getRepoPieChart() {
+      let tags = this.form.selectedTags
+      this.$log.debug('first tag: ', tags[0])
+      this.$log.debug('last tag: ', tags[tags.length - 1])
+      let from = 0, to = 0
+      for (const release in this.releases) {
+        if (this.releases[release].tagName === tags[0]) {
+          from = this.releases[release].createdAt
+        }
+        if (this.releases[release].tagName === tags[tags.length - 1]) {
+          to = this.releases[release].createdAt
+        }
+      }
+      this.$log.debug('timestamp from: ', from)
+      this.$log.debug('timestamp to: ', to)
+      await apis.getRepoPieChart(this.currRepo.owner, this.currRepo.name, from, to).then(res => {
+        this.$log.debug('getRepoPieChart: ', res.data.data)
+
+      }).catch(err => {
+        this.$message.error('获取饼图异常: ' + err)
+        this.$log.error('获取饼图异常: ' + err)
+      })
+    },
+    async initPieGraph() {
+      await this.getRepoPieChart()
+
     }
   }
 }

@@ -83,7 +83,7 @@ export default {
           this.$message.success('请求成功')
         })
         .catch(err => {
-          console.log(err)
+          this.$log.error(err)
           this.$message.error('请求失败: ' + err.message)
         }).finally(() => {
         this.loading = false
@@ -108,9 +108,9 @@ export default {
         csvExporter.generateCsv(this.tableData)
       }).then(() => {
         this.$message.success('导出成功')
-        console.log('导出成功')
+        this.$log.debug('导出成功')
       }).catch(err => {
-        console.log(err)
+        this.$log.error('导出失败', err)
         this.$message.error('导出失败: ' + err.message)
       })
     }
