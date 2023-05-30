@@ -2,14 +2,17 @@
   <main>
 
     <!--测试用-->
-    <span>owner: {{ repo.owner }}</span>
-    <span>name: {{ repo.name }}</span>
+    <!--    <span>owner: {{ repo.owner }}</span>-->
+    <!--    <span>name: {{ repo.name }}</span>-->
 
     <!--未初始化项目时显示-->
     <RepoInit ref='RepoInit' v-if='repo.owner === ""'>
     </RepoInit>
 
     <!--已初始化项目时显示-->
+    <RepoInfo v-if='repo.owner !== ""'>
+    </RepoInfo>
+
     <RepoScore v-if='repo.owner !== ""'>
     </RepoScore>
 
@@ -22,10 +25,11 @@ import RepoInit from '@/components/repo/RepoInit.vue'
 import RepoScore from '@/components/repo/RepoScore.vue'
 import RepoGraph from '@/components/repo/RepoGraph.vue'
 import apis from '@/apis'
+import RepoInfo from '@/components/repo/RepoInfo.vue'
 
 export default {
   name: 'RepoAnalyseView',
-  components: { RepoGraph, RepoScore, RepoInit },
+  components: { RepoInfo, RepoGraph, RepoScore, RepoInit },
   data() {
     return {
       // 初始化后的项目信息
