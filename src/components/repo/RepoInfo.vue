@@ -1,5 +1,5 @@
 <template>
-  <el-card class='card' shadow='hover'>
+  <el-card v-loading='loading' class='card' shadow='hover'>
     <template #header>
       <div class='card-header'>
         <div class='icon-text'>
@@ -35,10 +35,13 @@ export default {
   name: 'RepoInfo',
   mounted() {
     this.currRepo = this.$parent.$data.repo
+    this.loading = true
     apis.getRepoInfo(this.currRepo.owner, this.currRepo.name).then(res => {
       this.repoInfo = res.data.data
     }).catch(err => {
       this.$message.error('获取仓库信息异常: ' + err)
+    }).finally(() => {
+      this.loading = false
     })
   },
   data() {
@@ -54,7 +57,8 @@ export default {
         fullName: '',
         htmlUrl: '',
         lastUpdate: 0
-      }
+      },
+      loading: false
     }
   },
   methods: {}
@@ -98,15 +102,6 @@ el-form-item {
 .icon-text span {
     min-width: 100px;
     text-align: center;
-}
-
-.progress-line {
-    width: 20rem;
-}
-
-.el-progress .el-progress--line {
-    margin-bottom: 15px;
-    width: 350px;
 }
 
 #descriptions {

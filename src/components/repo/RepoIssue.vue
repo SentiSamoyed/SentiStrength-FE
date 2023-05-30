@@ -7,9 +7,6 @@
           <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
           <span>项目 Issues</span>
         </div>
-        <div class='buttons'>
-          <el-button type='primary' @click='this.getRepoIssue()'>提交</el-button>
-        </div>
       </div>
     </template>
 
@@ -19,6 +16,7 @@
         <el-select
           v-model='this.form.direction'
           placeholder='请选择排序方向'
+          @change='this.getRepoIssue()'
         >
           <el-option
             v-for='(label, value) in this.directionEnum'
@@ -34,6 +32,7 @@
         <el-select
           v-model='this.form.sortBy'
           placeholder='请选择排序依据'
+          @change='this.getRepoIssue()'
         >
           <el-option
             v-for='(label, value) in this.sortByEnum'
@@ -49,6 +48,7 @@
         <el-select
           v-model='this.form.state'
           placeholder='请选择 Issue 状态'
+          @change='this.getRepoIssue()'
         >
           <el-option
             v-for='(label, value) in this.stateEnum'
@@ -65,13 +65,26 @@
       <el-table-column type='expand'>
         <template #default='scope'>
           <el-descriptions>
-            <el-descriptions-item :span='24' label='Body'>{{ scope.row.body }}</el-descriptions-item>
+            <el-descriptions-item :span='24' label='Body'>
+            </el-descriptions-item>
           </el-descriptions>
+          <span>
+              {{ scope.row.body }}
+              </span>
         </template>
       </el-table-column>
-      <el-table-column fixed label='状态' min-width='10rem' prop='state'></el-table-column>
+      <el-table-column label='链接' width='80'>
+        <template #default='scope'>
+          <!--          <el-link :underline='false' :href='scope.row.htmlUrl' target='_blank'>打开链接</el-link>-->
+          <el-button size='small' type='success' @click='openUrl(scope.row.htmlUrl)'>
+            打开
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column label='标题' prop='title'></el-table-column>
-      <el-table-column label='情感值' prop='scaleVal'></el-table-column>
+      <el-table-column label='作者' prop='author' width='150px'></el-table-column>
+      <el-table-column label='状态' prop='state' width='100px'></el-table-column>
+      <el-table-column label='情感值' prop='scaleVal' width='100px'></el-table-column>
     </el-table>
 
 
@@ -93,6 +106,7 @@ export default {
   name: 'RepoIssue',
   mounted() {
     this.currRepo = this.$parent.$data.repo
+    this.getRepoIssue()
   },
   data() {
     return {
@@ -107,8 +121,8 @@ export default {
         state: 'open'
       },
       directionEnum: {
-        desc: '正分优先',
-        asc: '负分优先'
+        desc: '高分优先',
+        asc: '低分优先'
       },
       sortByEnum: {
         issueNumber: 'Issue 编号',
@@ -132,6 +146,7 @@ export default {
       this.$message.success('已重置选项')
     },
     getRepoIssue() {
+      this.loading = true
       apis.getRepoIssues(this.currRepo.owner, this.currRepo.name, this.form.page - 1, this.form.direction, this.form.sortBy, this.form.state)
         .then(res => {
           let data = res.data.data
@@ -143,7 +158,13 @@ export default {
           this.$log.debug('getRepoIssues() pageSize: ', this.pageSize)
         }).catch(err => {
         this.$log.error('getRepoIssues(): ', err)
+      }).finally(() => {
+        this.loading = false
       })
+    },
+    openUrl(url) {
+      // 打开 Github 链接
+      window.open(url)
     }
   }
 }
