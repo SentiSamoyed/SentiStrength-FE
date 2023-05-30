@@ -9,12 +9,6 @@
       </div>
     </template>
 
-    <div>
-      <span>项目ID：{{ this.repoInfo.id }}</span><br />
-      <span>项目名称：{{ this.repoInfo.fullName }}</span><br />
-      <span>项目地址：{{ this.repoInfo.htmlUrl }}</span><br />
-      <span>上次更新时间：{{ this.repoInfo.lastUpdate }}</span><br />
-    </div>
 
     <el-form :model='form' label-width='200px'>
       <el-form-item label='版本'>
@@ -82,14 +76,6 @@ export default {
       form: {
         selectedTags: []
       },
-      repoInfo: {
-        id: -1,
-        owner: '',
-        name: '',
-        fullName: '',
-        htmlUrl: '',
-        lastUpdate: 0
-      },
       releases: [],
       versions: [],
       repoTotal: {
@@ -108,11 +94,6 @@ export default {
   },
   mounted() {
     this.currRepo = this.$parent.$data.repo
-    apis.getRepoInfo(this.currRepo.owner, this.currRepo.name).then(res => {
-      this.repoInfo = res.data.data
-    }).catch(err => {
-      this.$message.error('获取仓库信息异常: ' + err)
-    })
 
     apis.getRepoReleases(this.currRepo.owner, this.currRepo.name).then(res => {
       let releases = res.data.data
