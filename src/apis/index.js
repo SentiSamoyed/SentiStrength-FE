@@ -28,7 +28,10 @@ const api = {
   sentimentAnalysisText: (data) => axios.post(buildUrl(endpoints.sentimentAnalysisText), data),
   getRepoList: () => axios.get(buildUrl(endpoints.getRepoList)),
   getRepoInfo: (owner, name) => axios.get(buildUrl(endpoints.getRepoInfo, { owner: owner, name: name })),
-  getRepoIssues: (owner, name) => axios.get(buildUrl(endpoints.getRepoIssues, { owner, name })),
+  getRepoIssues: (owner, name, page, direction, sortBy, states) => axios.get(buildUrl(endpoints.getRepoIssues, {
+    owner,
+    name
+  }) + `?page=${page}&direction=${direction}&sortBy=${sortBy}&states=${states}`),
   getRepoReleases: (owner, name) => axios.get(buildUrl(endpoints.getRepoReleases, { owner, name })),
   initRepo: (owner, name) => axios.post(buildUrl(endpoints.initRepo, { owner: owner, name: name })),
   getRepoTendency: (owner, name, granularity) => axios.get(buildUrl(endpoints.getRepoTendency, {
@@ -38,7 +41,7 @@ const api = {
   getRepoTotal: (owner, name, releaseTags) => axios.post(buildUrl(endpoints.getRepoTotal, {
     owner,
     name
-  }), {releaseTags: releaseTags}),
+  }), { releaseTags: releaseTags }),
   getRepoPieChart: (owner, name, from, to) => axios.get(buildUrl(endpoints.getRepoPieChart, {
     owner,
     name

@@ -53,7 +53,6 @@
     </el-form>
 
     <div id='tendency-container'>
-      <el-empty v-if='noData' description='无数据'></el-empty>
     </div>
 
   </el-card>

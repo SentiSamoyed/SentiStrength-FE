@@ -4,12 +4,12 @@
       <div class='card-header'>
         <div class='icon-text'>
           <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
-          <span>项目信息</span>
+          <span>基本信息</span>
         </div>
       </div>
     </template>
 
-    <el-descriptions column='2'>
+    <el-descriptions id='descriptions' column='2'>
       <el-descriptions-item label='项目 ID'>{{ this.repoInfo.id }}</el-descriptions-item>
       <el-descriptions-item label='项目名称'>
         <el-tag type='success'>
@@ -43,6 +43,10 @@ export default {
   },
   data() {
     return {
+      currRepo: {
+        owner: '',
+        name: ''
+      },
       repoInfo: {
         id: -1,
         owner: '',
@@ -103,5 +107,9 @@ el-form-item {
 .el-progress .el-progress--line {
     margin-bottom: 15px;
     width: 350px;
+}
+
+#descriptions {
+    padding: 0 3rem;
 }
 </style>
