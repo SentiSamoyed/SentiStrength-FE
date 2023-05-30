@@ -59,17 +59,21 @@
       <span>负向分值总数：{{ this.repoTotal.negCnt }}</span><br />
       <span>负向分值占比：{{ this.repoTotal.negRatio }}</span><br />
     </div>
+
+
     <div class='button-container'>
       <el-button type='primary' @click='getRepoScore()'>提交</el-button>
     </div>
 
     <div id='pie-container' />
+
   </el-card>
 
 </template>
 
 <script>
 import apis from '@/apis'
+import { Pie } from '@antv/g2plot'
 
 export default {
   name: 'RepoScore',
@@ -100,7 +104,9 @@ export default {
         posRatio: 0,
         negCnt: 0,
         negRatio: 0
-      }
+      },
+      pieChart: {},
+      plot: null
     }
   },
   mounted() {
@@ -115,8 +121,8 @@ export default {
       let releases = res.data.data
 
       this.$log.debug('getRepoReleases: ', releases)
-      releases.reverse()
       this.releases = releases
+      releases.reverse()
       releases.forEach(release => {
         this.versions.push({
           label: release.tagName,
@@ -143,7 +149,7 @@ export default {
         Object.keys(this.repoTotal).forEach(key => {
           this.repoTotal[key] = data[key]
         })
-        this.$log.debug(this.repoTotal)
+        this.$log.debug('getRepoScore() repoTotal: ', this.repoTotal)
         this.$message.success('请求成功')
       }).catch(err => {
         this.$message.error('请求失败: ' + err)
@@ -157,25 +163,62 @@ export default {
       let from = 0, to = 0
       for (const release in this.releases) {
         if (this.releases[release].tagName === tags[0]) {
-          from = this.releases[release].createdAt
+          to = this.releases[release].createdAt
         }
         if (this.releases[release].tagName === tags[tags.length - 1]) {
-          to = this.releases[release].createdAt
+          from = this.releases[release].createdAt
         }
       }
       this.$log.debug('timestamp from: ', from)
       this.$log.debug('timestamp to: ', to)
       await apis.getRepoPieChart(this.currRepo.owner, this.currRepo.name, from, to).then(res => {
         this.$log.debug('getRepoPieChart: ', res.data.data)
-
+        this.pieChart = res.data.data
       }).catch(err => {
         this.$message.error('获取饼图异常: ' + err)
         this.$log.error('获取饼图异常: ' + err)
       })
+      await this.initPieGraph()
     },
     async initPieGraph() {
-      await this.getRepoPieChart()
+      let data = []
+      Object.keys(this.pieChart).forEach(key => {
+        data.push({
+          type: key,
+          value: this.pieChart[key]
+        })
+      })
+      this.$log.debug('pieChart data: ', data)
 
+      this.plot = new Pie(document.getElementById('pie-container'), {
+        appendPadding: 10,
+        data,
+        angleField: 'value',
+        colorField: 'type',
+        radius: 0.8,
+        label: {
+          type: 'inner',
+          offset: '-30%',
+          style: {
+            textAlign: 'center',
+            fontSize: 14
+          }
+        },
+        interactions: [{ type: 'element-active' }],
+        statistic: {
+          title: {
+            offsetY: -4,
+            style: { fontSize: '14px' },
+            formatter: () => '总计'
+          },
+          content: {
+            offsetY: 4,
+            style: { fontSize: '14px' },
+            formatter: () => this.repoTotal.sum
+          }
+        }
+      })
+      this.plot.render()
     }
   }
 }
