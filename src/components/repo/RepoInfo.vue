@@ -11,7 +11,11 @@
 
     <el-descriptions column='2'>
       <el-descriptions-item label='项目 ID'>{{ this.repoInfo.id }}</el-descriptions-item>
-      <el-descriptions-item label='项目名称'>{{ this.repoInfo.fullName }}</el-descriptions-item>
+      <el-descriptions-item label='项目名称'>
+        <el-tag type='success'>
+          {{ this.repoInfo.fullName }}
+        </el-tag>
+      </el-descriptions-item>
       <el-descriptions-item label='项目地址'>
         <el-link :href=this.repoInfo.htmlUrl :underline='false' target='_blank' type='primary'>
           {{ this.repoInfo.htmlUrl }}

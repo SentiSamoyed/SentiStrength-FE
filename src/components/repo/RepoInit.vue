@@ -6,8 +6,15 @@
           <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
           <span>初始化项目</span>
         </div>
-        <div v-if='loading' class='progress-line'>
-          <el-progress :format='() => ``' :indeterminate='true' :percentage='50' />
+        <div v-if='loading' class='icon-line'>
+          <div class='icon'>
+            <el-icon class='is-loading'>
+              <Loading />
+            </el-icon>
+          </div>
+          <div class='progress-line'>
+            <el-progress :format='() => ``' :indeterminate='true' :percentage='50' />
+          </div>
         </div>
       </div>
     </template>
@@ -38,9 +45,11 @@
 <script>
 
 import apis from '@/apis'
+import { Loading } from '@element-plus/icons-vue'
 
 export default {
   name: 'RepoInit',
+  components: { Loading },
   data() {
     return {
       form: {
@@ -224,8 +233,15 @@ el-form-item {
     width: 20rem;
 }
 
-.el-progress .el-progress--line {
-    margin-bottom: 15px;
-    width: 350px;
+.icon {
+    display: flex;
+    margin-right: 0.5rem;
 }
+
+.icon-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 </style>

@@ -10,13 +10,15 @@
     </template>
 
 
-    <el-form :model='form' label-width='200px'>
-      <el-form-item label='版本'>
+    <el-form :model='form'>
+      <el-form-item label='版本' label-width='35%'>
         <el-select
           v-model='this.form.selectedTags'
           multiple
           filterable
           clearable
+          collapse-tags
+          collapse-tags-tooltip
           placeholder='请选择版本'
           @change='getRepoScore'
         >
@@ -44,15 +46,36 @@
     </el-form>
 
 
-    <div>
-      <span>平均分值：{{ this.repoTotal.avg }}</span><br />
-      <span>分值总和：{{ this.repoTotal.sum }}</span><br />
-      <span>总条目数：{{ this.repoTotal.count }}</span><br />
-      <span>分值平均值：{{ this.repoTotal.avg }}</span><br />
-      <span>正向分值总数：{{ this.repoTotal.posCnt }}</span><br />
-      <span>正向分值占比：{{ this.repoTotal.posRatio }}</span><br />
-      <span>负向分值总数：{{ this.repoTotal.negCnt }}</span><br />
-      <span>负向分值占比：{{ this.repoTotal.negRatio }}</span><br />
+    <div class='statistics'>
+      <el-row justify='space-evenly'>
+        <el-col :span='4'></el-col>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.avg' precision='2' title='平均分值' />
+        </el-col>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.sum' precision='0' title='分值总和' />
+        </el-col>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.count' precision='0' title='总条目数' />
+        </el-col>
+        <el-col :span='4'></el-col>
+      </el-row>
+      <el-row justify='space-evenly'>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.posCnt' precision='0' title='正向分值总数' />
+        </el-col>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.posRatio * 100' precision='2' suffix='%' title='正向分值占比' />
+        </el-col>
+      </el-row>
+      <el-row justify='space-evenly'>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.negCnt' precision='0' title='负向分值总数' />
+        </el-col>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.negRatio * 100' precision='2' suffix='%' title='负向分值占比' />
+        </el-col>
+      </el-row>
     </div>
 
     <div id='pie-container' />
@@ -100,14 +123,16 @@ export default {
 
       this.$log.debug('getRepoReleases: ', releases)
       this.releases = releases
-      releases.reverse()
-      releases.forEach(release => {
-        this.versions.push({
-          label: release.tagName,
-          value: release.tagName,
-          time: new Date(release.createdAt).toDateString()
+      if (releases.length !== 0) {
+        releases.reverse()
+        releases.forEach(release => {
+          this.versions.push({
+            label: release.tagName,
+            value: release.tagName,
+            time: new Date(release.createdAt).toDateString()
+          })
         })
-      })
+      }
       //   加入 No release Tag 到版本列表最后面
       this.versions.push({
         label: 'No release Tag',
@@ -128,7 +153,6 @@ export default {
           this.repoTotal[key] = data[key]
         })
         this.$log.debug('getRepoScore() repoTotal: ', this.repoTotal)
-        this.$message.success('请求成功')
       }).catch(err => {
         this.$message.error('请求失败: ' + err)
       })
