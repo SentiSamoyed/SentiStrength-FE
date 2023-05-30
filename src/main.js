@@ -1,7 +1,7 @@
 import 'element-plus/dist/index.css'
 import { createApp } from 'vue'
 import App from './App.vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import router from './router'
 
 import './assets/main.css'
@@ -26,7 +26,7 @@ import {
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 
-import VueLogger from 'vuejs3-logger';
+import VueLogger from 'vuejs3-logger'
 
 const isProduction = import.meta.env.PROD;
 
@@ -49,7 +49,8 @@ library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable
 app.use(router)
 app.use(ElMessage)
 app.use(ElMessageBox)
-app.use(VueLogger, options);
+app.use(ElNotification)
+app.use(VueLogger, options)
 
 app
   .component('font-awesome-icon', FontAwesomeIcon)

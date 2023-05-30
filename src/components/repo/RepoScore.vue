@@ -24,6 +24,7 @@
           filterable
           clearable
           placeholder='请选择版本'
+          @change='getRepoScore'
         >
           <template #prefix>
             <font-awesome-icon icon='fa-solid fa-code-compare' />
@@ -58,11 +59,6 @@
       <span>正向分值占比：{{ this.repoTotal.posRatio }}</span><br />
       <span>负向分值总数：{{ this.repoTotal.negCnt }}</span><br />
       <span>负向分值占比：{{ this.repoTotal.negRatio }}</span><br />
-    </div>
-
-
-    <div class='button-container'>
-      <el-button type='primary' @click='getRepoScore()'>提交</el-button>
     </div>
 
     <div id='pie-container' />
@@ -106,6 +102,7 @@ export default {
         negRatio: 0
       },
       pieChart: {},
+      pieDataCnt: 0,
       plot: null
     }
   },
@@ -154,9 +151,9 @@ export default {
       }).catch(err => {
         this.$message.error('请求失败: ' + err)
       })
-      this.getRepoPieChart()
+      this.updatePieData()
     },
-    async getRepoPieChart() {
+    async updatePieData() {
       let tags = this.form.selectedTags
       this.$log.debug('first tag: ', tags[0])
       this.$log.debug('last tag: ', tags[tags.length - 1])
@@ -174,14 +171,22 @@ export default {
       await apis.getRepoPieChart(this.currRepo.owner, this.currRepo.name, from, to).then(res => {
         this.$log.debug('getRepoPieChart: ', res.data.data)
         this.pieChart = res.data.data
+        // pie data cnt
+        this.pieDataCnt = 0
+        Object.keys(this.pieChart).forEach(key => {
+          this.pieDataCnt += this.pieChart[key]
+        })
+
       }).catch(err => {
         this.$message.error('获取饼图异常: ' + err)
         this.$log.error('获取饼图异常: ' + err)
       })
-      await this.initPieGraph()
+
+      await this.updatePieGraph()
     },
-    async initPieGraph() {
+    async updatePieGraph() {
       let data = []
+      // 将对象转换为数组
       Object.keys(this.pieChart).forEach(key => {
         data.push({
           type: key,
@@ -190,35 +195,62 @@ export default {
       })
       this.$log.debug('pieChart data: ', data)
 
-      this.plot = new Pie(document.getElementById('pie-container'), {
-        appendPadding: 10,
-        data,
-        angleField: 'value',
-        colorField: 'type',
-        radius: 0.8,
-        label: {
-          type: 'inner',
-          offset: '-30%',
-          style: {
-            textAlign: 'center',
-            fontSize: 14
-          }
-        },
-        interactions: [{ type: 'element-active' }],
-        statistic: {
+      if (this.plot !== null) {
+        // plot 已经初始化
+        this.plot.changeData(data)
+      } else {
+        // 初始化 plot
+        this.plot = new Pie(document.getElementById('pie-container'), {
+          data,
+          radius: 0.8,
+          angleField: 'value',
+          colorField: 'type',
           title: {
-            offsetY: -4,
-            style: { fontSize: '14px' },
-            formatter: () => '总计'
+            visible: true,
+            text: '仓库分值饼图',
+            style: {
+              fontSize: 14
+            }
           },
-          content: {
-            offsetY: 4,
-            style: { fontSize: '14px' },
-            formatter: () => this.repoTotal.sum
+          description: {
+            visible: true,
+            text: '仓库分值饼图',
+            style: {
+              fontSize: 14
+            }
+          },
+          label: {
+            type: 'spider',
+            content: '{name}分： {percentage}'
+          },
+          meta: {
+            type: {
+              alias: '分值',
+              formatter: (v) => `${v} 分`
+            },
+            value: {
+              alias: '数量',
+              formatter: (v) => `${v}`
+            }
+          },
+          tooltip: {},
+          interactions: [{ type: 'element-active' }],
+          innerRadius: 0.4,
+          statistic: {
+            title: {
+              offsetY: -10,
+              style: { fontSize: '14px' },
+              formatter: () => '总数量'
+            },
+            content: {
+              offsetY: 10,
+              style: { fontSize: '20px' },
+              formatter: () => `${this.pieDataCnt} 个`
+            }
           }
-        }
-      })
-      this.plot.render()
+        })
+        this.plot.render()
+      }
     }
   }
 }

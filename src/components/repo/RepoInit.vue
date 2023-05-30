@@ -6,11 +6,14 @@
           <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
           <span>初始化项目</span>
         </div>
+        <div v-if='loading' class='progress-line'>
+          <el-progress :format='() => ``' :indeterminate='true' :percentage='50' />
+        </div>
       </div>
     </template>
 
-    <el-form :model='form' ref='form' :rules='formRules' label-width='200px'>
-      <el-form-item label='项目名称' prop='selectedRepoName'>
+    <el-form ref='form' :model='form' :rules='formRules'>
+      <el-form-item label='项目名称' label-width='35%' prop='selectedRepoName'>
         <el-autocomplete
           v-model='form.selectedRepoName'
           :fetch-suggestions='querySearch'
@@ -24,6 +27,7 @@
 
       </el-form-item>
     </el-form>
+
 
     <div class='button-container'>
       <el-button type='primary' @click='initRepo()'>下一步</el-button>
@@ -53,7 +57,7 @@ export default {
         name: ''
       },
       loading: false,    // 是否正在加载数据
-      maxAttempts: 15,   // 最大轮询次数
+      maxAttempts: 10,   // 最大轮询次数
       attemptCount: 0    // 当前轮询次数
     }
   },
@@ -87,13 +91,16 @@ export default {
       this.$refs.form.validate(valid => {
         if (!valid) {
           this.$message.error('请检查输入项')
-
         }
+      }).catch((err) => {
+        this.$message.error('请检查输入项')
+      }).finally(() => {
+        this.$log.debug('校验完成')
       })
 
       let repoList = this.$parent.$data.repoList
       let initialized = repoList.some(item => item.fullName === this.form.selectedRepoName)
-
+      // 设置当前选择的的 repo
       this.setRepo(this.form.selectedRepoName)
 
       // 已初始化
@@ -105,10 +112,10 @@ export default {
 
       // 未初始化
       this.$log.info('需要初始化的 repo 全名: ', this.form.selectedRepoName)
-      this.$messageBox.confirm('确认初始化该项目？', '未初始化项目', {
+      this.$messageBox.confirm('初始化时间较长，建议稍候再来', '该项目未初始化', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'info'
+        type: 'warning'
       }).then(() => {
         this.$log.info('确认初始化项目：', this.form.selectedRepoName)
         // 初始化项目
@@ -118,6 +125,7 @@ export default {
       })
     },
     fetchData() {
+      this.$message.info(`项目 ${this.form.selectedRepoName} 初始化中，请稍候...`)
       this.loading = true    // 显示加载圈
       this.attemptCount = 0  // 重置轮询计数器
       this.pollData() // 开始轮询数据
@@ -126,34 +134,37 @@ export default {
       try {
         while (true) {
           this.$log.debug('轮询次数: ', this.attemptCount)
+          this.$log.debug('最大次数: ', this.maxAttempts)
           // 达到最大轮询次数，停止轮询
           if (this.attemptCount >= this.maxAttempts) {
-            this.$log.error('轮询超时')
-            this.$message.error('请求超时')
+            this.$log.error('超时')
+            this.$message.warning('初始化时间过长，请等待一段时间后再试')
             this.loading = false
             return
           }
           const res = await apis.initRepo(this.repo.owner, this.repo.name)
-          let data = res.data
-
-          this.$log.debug('轮询中...次数', this.attemptCount)
+          let data = res.data.data
           this.$log.debug('轮询结果：', data)
 
           if (data === 0) {
             // 未初始化完成，继续轮询
+            this.$log.debug('data 为 0，继续轮询')
             await new Promise((resolve) => setTimeout(resolve, 2000))
             this.attemptCount++
             continue
-          } else if (data.data === 1) {
+          } else if (data === 1) {
             // 初始化完成，停止轮询
-            this.$log.debug('轮询完成')
+            this.$log.debug('data 为 1,轮询完成')
             this.setParentRepo()
             this.$message.success('初始化成功')
-          } else if (data.data === 2) {
+          } else if (data === 2) {
             // repo 不存在
+            this.$log.debug('data 为 2, repo 不存在')
             this.$log.error('Repo 不存在')
             this.$message.error('该仓库不存在')
-          } else if (data.data === 3) {
+          } else if (data === 3) {
+            // repo 不存在 issues
+            this.$log.debug('data 为 3, repo 不存在 issues')
             this.$log.error('Repo 不存在 Issues')
             this.$message.error('该仓库不存在 Issues')
           }
@@ -201,11 +212,20 @@ el-form-item {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 0;
 }
 
 .icon-text span {
-    flex: 1;
     min-width: 100px;
     text-align: center;
+}
+
+.progress-line {
+    width: 20rem;
+}
+
+.el-progress .el-progress--line {
+    margin-bottom: 15px;
+    width: 350px;
 }
 </style>

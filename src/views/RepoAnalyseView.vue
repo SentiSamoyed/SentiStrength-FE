@@ -2,8 +2,8 @@
   <main>
 
     <!--测试用-->
-    <span>owner: {{ repo.owner }}</span>
-    <span>name: {{ repo.name }}</span>
+    <!--    <span>owner: {{ repo.owner }}</span>-->
+    <!--    <span>name: {{ repo.name }}</span>-->
 
     <!--未初始化项目时显示-->
     <RepoInit ref='RepoInit' v-if='repo.owner === ""'>
