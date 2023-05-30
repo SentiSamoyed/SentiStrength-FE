@@ -1,8 +1,8 @@
 <template>
   <main>
-    <AnalyseOptions ref='AnalyseOptions' />
+    <TextOptions ref='AnalyseOptions' />
 
-    <AnalyseText ref='AnalyseText'>
+    <TextInput ref='AnalyseText'>
       <template #text>
         <el-input v-model='form.text' :autosize='{ minRows: 4, maxRows: 10 }' placeholder='请输入文本'
                   style='margin: 1rem;'
@@ -11,9 +11,9 @@
       <template #button>
         <el-button type='primary' @click='submit'>提交</el-button>
       </template>
-    </AnalyseText>
+    </TextInput>
 
-    <AnalyseResult>
+    <TextResult>
       <template #button>
         <el-button type='primary' @click='exportCsv'>导出</el-button>
       </template>
@@ -28,7 +28,7 @@
           <el-table-column label='Explain' prop='explain'></el-table-column>
         </el-table>
       </template>
-    </AnalyseResult>
+    </TextResult>
   </main>
 </template>
 
@@ -38,14 +38,14 @@
 <script>
 import AnalyseOptions from '@/components/text/TextOptions.vue'
 import { reactive } from 'vue'
-import AnalyseText from '@/components/text/TextInput.vue'
+import TextInput from '@/components/text/TextInput.vue'
 import AnalyseResult from '@/components/text/TextResult.vue'
 import { ExportToCsv } from 'export-to-csv'
 import apis from '@/apis'
 
 export default {
   name: 'HomeView',
-  components: { AnalyseResult, AnalyseText, AnalyseOptions },
+  components: { TextResult: AnalyseResult, TextInput, TextOptions: AnalyseOptions },
   data() {
     return {
       form: reactive({

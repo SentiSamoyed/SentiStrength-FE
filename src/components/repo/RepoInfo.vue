@@ -1,15 +1,15 @@
 <template>
-  <el-card class='card' shadow='hover'>
+  <el-card v-loading='loading' class='card' shadow='hover'>
     <template #header>
       <div class='card-header'>
         <div class='icon-text'>
           <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
-          <span>项目信息</span>
+          <span>基本信息</span>
         </div>
       </div>
     </template>
 
-    <el-descriptions column='2'>
+    <el-descriptions id='descriptions' column='2'>
       <el-descriptions-item label='项目 ID'>{{ this.repoInfo.id }}</el-descriptions-item>
       <el-descriptions-item label='项目名称'>
         <el-tag type='success'>
@@ -35,14 +35,21 @@ export default {
   name: 'RepoInfo',
   mounted() {
     this.currRepo = this.$parent.$data.repo
+    this.loading = true
     apis.getRepoInfo(this.currRepo.owner, this.currRepo.name).then(res => {
       this.repoInfo = res.data.data
     }).catch(err => {
       this.$message.error('获取仓库信息异常: ' + err)
+    }).finally(() => {
+      this.loading = false
     })
   },
   data() {
     return {
+      currRepo: {
+        owner: '',
+        name: ''
+      },
       repoInfo: {
         id: -1,
         owner: '',
@@ -50,7 +57,8 @@ export default {
         fullName: '',
         htmlUrl: '',
         lastUpdate: 0
-      }
+      },
+      loading: false
     }
   },
   methods: {}
@@ -96,12 +104,7 @@ el-form-item {
     text-align: center;
 }
 
-.progress-line {
-    width: 20rem;
-}
-
-.el-progress .el-progress--line {
-    margin-bottom: 15px;
-    width: 350px;
+#descriptions {
+    padding: 0 3rem;
 }
 </style>

@@ -50,13 +50,20 @@
       <el-row justify='space-evenly'>
         <el-col :span='4'></el-col>
         <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.avg' precision='2' title='平均分值' />
+          <el-statistic :value='this.repoTotal.count' precision='0' title='总条目数' />
+        </el-col>
+        <el-col :span='4'>
+          <el-statistic :value='this.repoTotal.avg' precision='2'>
+            <template #title>
+              <div style='display: inline-flex; align-items: center'>
+                平均分值
+              </div>
+            </template>
+          </el-statistic>
+
         </el-col>
         <el-col :span='4'>
           <el-statistic :value='this.repoTotal.sum' precision='0' title='分值总和' />
-        </el-col>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.count' precision='0' title='总条目数' />
         </el-col>
         <el-col :span='4'></el-col>
       </el-row>
@@ -87,9 +94,11 @@
 <script>
 import apis from '@/apis'
 import { Pie } from '@antv/g2plot'
+import { InfoFilled } from '@element-plus/icons-vue'
 
 export default {
   name: 'RepoScore',
+  components: { InfoFilled },
   data() {
     return {
       currRepo: {
@@ -239,20 +248,20 @@ export default {
             }
           },
           tooltip: {},
-          interactions: [{ type: 'element-active' }],
-          innerRadius: 0.4,
-          statistic: {
-            title: {
-              offsetY: -10,
-              style: { fontSize: '14px' },
-              formatter: () => '总数量'
-            },
-            content: {
-              offsetY: 10,
-              style: { fontSize: '20px' },
-              formatter: () => `${this.pieDataCnt} 个`
-            }
-          }
+          interactions: [{ type: 'element-active' }]
+          // innerRadius: 0.4,
+          // statistic: {
+          //   title: {
+          //     offsetY: -10,
+          //     style: { fontSize: '14px' },
+          //     formatter: () => '总数量'
+          //   },
+          //   content: {
+          //     offsetY: 10,
+          //     style: { fontSize: '20px' },
+          //     formatter: () => `${this.pieDataCnt} 个`
+          //   }
+          // }
         })
         this.plot.render()
       }
@@ -272,9 +281,8 @@ export default {
     align-items: center;
 }
 
-.button-container {
-    display: flex;
-    justify-content: flex-end;
+.el-col {
+    text-align: center;
 }
 
 el-form-item {

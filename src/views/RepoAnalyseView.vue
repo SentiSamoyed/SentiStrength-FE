@@ -10,13 +10,10 @@
     </RepoInit>
 
     <!--已初始化项目时显示-->
-    <RepoInfo v-if='repo.owner !== ""'>
-    </RepoInfo>
-
-    <RepoScore v-if='repo.owner !== ""'>
-    </RepoScore>
-
+    <RepoInfo v-if='repo.owner !== ""' />
+    <RepoScore v-if='repo.owner !== ""' />
     <RepoGraph v-if='repo.owner !== ""' />
+    <RepoIssue v-if='repo.owner !== ""' />
 
   </main>
 </template>
@@ -26,10 +23,11 @@ import RepoScore from '@/components/repo/RepoScore.vue'
 import RepoGraph from '@/components/repo/RepoGraph.vue'
 import apis from '@/apis'
 import RepoInfo from '@/components/repo/RepoInfo.vue'
+import RepoIssue from '@/components/repo/RepoIssue.vue'
 
 export default {
   name: 'RepoAnalyseView',
-  components: { RepoInfo, RepoGraph, RepoScore, RepoInit },
+  components: { RepoIssue, RepoInfo, RepoGraph, RepoScore, RepoInit },
   data() {
     return {
       // 初始化后的项目信息

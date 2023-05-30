@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'AnalyseText',
+  name: 'TextInput',
   data() {
     return {}
   }
