@@ -73,6 +73,8 @@
               </span>
         </template>
       </el-table-column>
+      <el-table-column label='Issue 编号' prop='issueNumber' width='100px'></el-table-column>
+
       <el-table-column label='链接' width='80'>
         <template #default='scope'>
           <!--          <el-link :underline='false' :href='scope.row.htmlUrl' target='_blank'>打开链接</el-link>-->
@@ -121,8 +123,8 @@ export default {
         state: 'open'
       },
       directionEnum: {
-        desc: '高分优先',
-        asc: '低分优先'
+        desc: '降序',
+        asc: '升序'
       },
       sortByEnum: {
         issueNumber: 'Issue 编号',
