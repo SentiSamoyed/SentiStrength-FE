@@ -57,21 +57,33 @@
       </el-form>
 
       <el-table v-loading='loading' :data='this.issueList' :table-layout='"auto"' height='600px'>
-        <el-table-column type='expand'>
+        <el-table-column label='详细信息' type='expand' width='100'>
           <template #default='scope'>
-            <el-descriptions>
+            <el-descriptions column='2' style='padding: 0 3rem'>
+              <el-descriptions-item label='创建时间'>{{ new Date(scope.row.createdAt).toDateString() }}
+              </el-descriptions-item>
+              <el-descriptions-item label='修改时间'>{{ new Date(scope.row.updatedAt).toDateString() }}
+              </el-descriptions-item>
+              <el-descriptions-item label='评论数量'>{{ scope.row.comments }}</el-descriptions-item>
               <el-descriptions-item :span='24' label='Body'>
-                <el-button size='small' type='success'>
-                  显示 Body 内容
+                <el-button size='small' type='primary' @click='togglgDialogVisibility()'>
+                  Body 内容
                 </el-button>
-                {{ scope.row.body }}
+                <el-dialog
+                  v-model='dialogVisible'
+                  :modal=false
+                  append-to-body
+                  title='Body 内容'
+                >
+                  <span>{{ scope.row.body }}</span>
+                </el-dialog>
               </el-descriptions-item>
             </el-descriptions>
           </template>
         </el-table-column>
         <el-table-column label='Issue 编号' prop='issueNumber' width='100px'></el-table-column>
 
-        <el-table-column label='链接' width='80'>
+        <el-table-column label='链接' width='50'>
           <template #default='scope'>
             <!--          <el-link :underline='false' :href='scope.row.htmlUrl' target='_blank'>打开链接</el-link>-->
             <el-button size='small' type='success' @click='openUrl(scope.row.htmlUrl)'>
@@ -136,7 +148,8 @@ export default {
       pageCount: 0,
       pageSize: 0,
       issueList: [],
-      loading: false
+      loading: false,
+      dialogVisible: false
     }
   },
   methods: {
@@ -164,6 +177,9 @@ export default {
     openUrl(url) {
       // 打开 Github 链接
       window.open(url)
+    },
+    togglgDialogVisibility() {
+      this.dialogVisible = !this.dialogVisible
     }
   }
 }
@@ -178,5 +194,11 @@ el-form-item {
 span {
     min-width: 100px;
     text-align: center;
+    word-break: normal;
+    width: auto;
+    display: block;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
 }
 </style>
