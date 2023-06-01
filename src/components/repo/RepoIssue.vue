@@ -76,7 +76,7 @@
                   title='Body 内容'
                   width='80%'
                 >
-                  <span v-html='issueBody'></span>
+                  <span id='issue-body' v-html='issueBody'></span>
                 </el-dialog>
               </el-descriptions-item>
             </el-descriptions>
@@ -86,7 +86,7 @@
 
         <el-table-column label='链接' width='50'>
           <template #default='scope'>
-            <el-button size='small' type='success' @click='openUrl(scope.row.htmlUrl)'>
+            <el-button size='small' type='primary' @click='openUrl(scope.row.htmlUrl)'>
               打开
             </el-button>
           </template>
@@ -195,12 +195,18 @@ el-form-item {
 }
 
 span {
+    flex: 1;
     min-width: 100px;
+    text-align: center;
+}
+
+#issue-body {
     word-break: normal;
     width: auto;
     display: block;
     white-space: pre-wrap;
     word-wrap: break-word;
     overflow: scroll;
+
 }
 </style>
