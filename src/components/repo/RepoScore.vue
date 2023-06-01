@@ -1,7 +1,7 @@
 <template>
   <card>
     <template #icon-text>
-      <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+      <font-awesome-icon icon='fa-solid fa-star-half-stroke' />
       <span>项目分值</span>
     </template>
     <template #body>

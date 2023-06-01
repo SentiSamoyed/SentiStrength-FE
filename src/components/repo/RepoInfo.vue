@@ -1,7 +1,7 @@
 <template>
   <card>
     <template #icon-text>
-      <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+      <font-awesome-icon icon='fa-solid fa-info' />
       <span>基本信息</span>
     </template>
 

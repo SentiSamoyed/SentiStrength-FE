@@ -3,7 +3,7 @@
     <template #header>
       <div class='card-header'>
         <div class='icon-text'>
-          <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+          <font-awesome-icon :icon="['fas', 'chart-line']" />
           <span>趋势图</span>
         </div>
       </div>

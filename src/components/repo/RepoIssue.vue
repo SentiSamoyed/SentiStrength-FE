@@ -1,7 +1,7 @@
 <template>
   <card>
     <template #icon-text>
-      <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+      <font-awesome-icon icon='fa-solid fa-circle-dot' />
       <span>项目 Issues</span>
     </template>
     <template #body>
@@ -112,6 +112,7 @@
 import apis from '@/apis'
 import Card from '@/components/common/Card.vue'
 import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 
 export default {
   name: 'RepoIssue',
@@ -182,7 +183,7 @@ export default {
     },
     toggleDialogVisibility(body) {
       this.dialogVisible = !this.dialogVisible
-      this.issueBody = marked(body)
+      this.issueBody = DOMPurify.sanitize(marked(body))
     }
   }
 }
@@ -201,6 +202,7 @@ span {
 }
 
 #issue-body {
+    text-align: left;
     word-break: normal;
     width: auto;
     display: block;

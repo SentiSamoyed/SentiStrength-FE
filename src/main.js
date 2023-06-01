@@ -14,16 +14,21 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import {
+  faChartLine,
   faChartSimple,
+  faCircleDot,
   faClock,
   faCodeCompare,
+  faDiagramProject,
   faFile,
   faFileLines,
   faHouseUser,
+  faInfo,
   faMagnifyingGlassChart,
   faPercent,
   faSearch,
   faSliders,
+  faStarHalfStroke,
   faTable,
   faTags
 } from '@fortawesome/free-solid-svg-icons'
@@ -32,7 +37,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 
 import VueLogger from 'vuejs3-logger'
 
-const isProduction = import.meta.env.PROD;
+const isProduction = import.meta.env.PROD
 
 const options = {
   isEnabled: true,
@@ -42,7 +47,7 @@ const options = {
   showMethodName: true,
   separator: '|',
   showConsoleColors: true
-};
+}
 
 const app = createApp(App)
 
@@ -51,7 +56,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 /* add icons to the library */
-library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable, faGithub, faSearch, faCodeCompare, faClock, faPercent, faTags, faChartSimple, faFile)
+library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable, faGithub, faSearch, faCodeCompare, faClock, faPercent, faTags, faChartSimple, faFile, faStarHalfStroke, faInfo, faChartLine, faCircleDot, faDiagramProject)
 
 
 app.use(router)
