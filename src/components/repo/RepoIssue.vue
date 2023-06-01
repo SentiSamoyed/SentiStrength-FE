@@ -65,17 +65,18 @@
               <el-descriptions-item label='修改时间'>{{ new Date(scope.row.updatedAt).toDateString() }}
               </el-descriptions-item>
               <el-descriptions-item label='评论数量'>{{ scope.row.comments }}</el-descriptions-item>
-              <el-descriptions-item :span='24' label='Body'>
-                <el-button size='small' type='primary' @click='togglgDialogVisibility()'>
-                  Body 内容
+              <el-descriptions-item :span='24' label='Body 内容'>
+                <el-button size='small' type='primary' @click='toggleDialogVisibility(scope.row.body)'>
+                  查看
                 </el-button>
                 <el-dialog
                   v-model='dialogVisible'
                   :modal=false
                   append-to-body
                   title='Body 内容'
+                  width='80%'
                 >
-                  <span>{{ scope.row.body }}</span>
+                  <span v-html='issueBody'></span>
                 </el-dialog>
               </el-descriptions-item>
             </el-descriptions>
@@ -85,7 +86,6 @@
 
         <el-table-column label='链接' width='50'>
           <template #default='scope'>
-            <!--          <el-link :underline='false' :href='scope.row.htmlUrl' target='_blank'>打开链接</el-link>-->
             <el-button size='small' type='success' @click='openUrl(scope.row.htmlUrl)'>
               打开
             </el-button>
@@ -111,6 +111,7 @@
 <script>
 import apis from '@/apis'
 import Card from '@/components/common/Card.vue'
+import { marked } from 'marked'
 
 export default {
   name: 'RepoIssue',
@@ -149,7 +150,8 @@ export default {
       pageSize: 0,
       issueList: [],
       loading: false,
-      dialogVisible: false
+      dialogVisible: false,
+      issueBody: ''
     }
   },
   methods: {
@@ -178,8 +180,9 @@ export default {
       // 打开 Github 链接
       window.open(url)
     },
-    togglgDialogVisibility() {
+    toggleDialogVisibility(body) {
       this.dialogVisible = !this.dialogVisible
+      this.issueBody = marked(body)
     }
   }
 }
@@ -193,12 +196,11 @@ el-form-item {
 
 span {
     min-width: 100px;
-    text-align: center;
     word-break: normal;
     width: auto;
     display: block;
     white-space: pre-wrap;
     word-wrap: break-word;
-    overflow: hidden;
+    overflow: scroll;
 }
 </style>
