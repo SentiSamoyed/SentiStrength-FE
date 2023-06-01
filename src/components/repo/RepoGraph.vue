@@ -139,13 +139,17 @@ export default {
           // text 是data列表中的某个Object，item 是每个点的数据，index 是索引
           formatter: (text, item, index) => {
             if (this.yAxis === 'avg') {
-              return text.avg.toFixed(2) + '分'
+              return text.avg.toFixed(2)
             } else if (this.yAxis === 'ratio') {
               return (text.ratio * 100).toFixed(2) + '%'
             } else if (this.yAxis === 'sum') {
-              return text.sum + '分'
+              return text.sum
             }
           }
+        },
+        slider: {
+          start: 0.1,
+          end: 0.9
         }
       })
       this.plot = line

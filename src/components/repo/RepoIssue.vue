@@ -66,7 +66,7 @@
               </el-descriptions-item>
               <el-descriptions-item label='评论数量'>{{ scope.row.comments }}</el-descriptions-item>
               <el-descriptions-item :span='24' label='Body 内容'>
-                <el-button size='small' type='primary' @click='toggleDialogVisibility(scope.row.body)'>
+                <el-button size='small' type='success' @click='toggleDialogVisibility(scope.row.body)'>
                   查看
                 </el-button>
                 <el-dialog
@@ -86,7 +86,7 @@
 
         <el-table-column label='链接' width='50'>
           <template #default='scope'>
-            <el-button size='small' type='primary' @click='openUrl(scope.row.htmlUrl)'>
+            <el-button size='small' type='success' @click='openUrl(scope.row.htmlUrl)'>
               打开
             </el-button>
           </template>
