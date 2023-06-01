@@ -14,15 +14,18 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import {
+  faChartSimple,
   faClock,
   faCodeCompare,
+  faFile,
   faFileLines,
   faHouseUser,
   faMagnifyingGlassChart,
   faPercent,
   faSearch,
   faSliders,
-  faTable
+  faTable,
+  faTags
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
@@ -48,7 +51,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 /* add icons to the library */
-library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable, faGithub, faSearch, faCodeCompare, faClock, faPercent)
+library.add(faHouseUser, faMagnifyingGlassChart, faSliders, faFileLines, faTable, faGithub, faSearch, faCodeCompare, faClock, faPercent, faTags, faChartSimple, faFile)
 
 
 app.use(router)

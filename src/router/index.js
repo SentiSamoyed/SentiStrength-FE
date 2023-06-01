@@ -14,9 +14,17 @@ const router = createRouter({
       name: 'analyse',
       component: AnalyseView
     }, {
-    path: '/repo',
+      path: '/repo',
       name: 'repo',
       component: () => import('@/views/RepoAnalyseView.vue')
+    }, {
+      path: '/label-graph',
+      name: 'label-graph',
+      component: () => import('@/views/LabelGraphView.vue')
+    }, {
+      path: '/label-doc',
+      name: 'label-doc',
+      component: () => import('@/views/LabelDocView.vue')
     }
   ]
 })
