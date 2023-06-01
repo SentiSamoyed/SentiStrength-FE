@@ -16,7 +16,7 @@
           filterable
           clearable
           placeholder='请选择时间粒度'
-          @change='updateXAxis'
+          @change='updateGraph'
         >
           <template #prefix>
             <font-awesome-icon icon='fa-solid fa-clock' />
@@ -36,7 +36,7 @@
           filterable
           clearable
           placeholder='请选择纵坐标'
-          @change='updateYAxis'
+          @change='updateGraph'
         >
           <template #prefix>
             <font-awesome-icon icon='fa-solid fa-percent' />
@@ -101,6 +101,14 @@ export default {
     async getRepoTendency() {
       for (const key of Object.keys(this.graphList)) {
         await apis.getRepoTendency(this.currRepo.owner, this.currRepo.name, key.toString()).then(res => {
+          let data = res.data.data
+          // 去除 data 中 avg 和 ratio 中的 NAN，avg替换为0，posRatio 和 negRatio 替换为0，否则会导致图表无法显示
+          data.forEach(item => {
+            item.avg = isNaN(item.avg) ? 0 : item.avg
+            item.ratio = isNaN(item.ratio) ? 0 : item.ratio
+            item.posRatio = isNaN(item.posRatio) ? 0 : item.posRatio
+            item.negRatio = isNaN(item.negRatio) ? 0 : item.negRatio
+          })
           this.graphList[key] = res.data.data
         }).catch(err => {
           this.$message.error('获取趋势图失败: ', err)
@@ -114,18 +122,59 @@ export default {
       const line = new Line('tendency-container', {
         data: this.graphList[this.xAxis],
         xField: 'milestone',
-        yField: this.yAxis
+        yField: this.yAxis,
+        xAxis: {
+          title: {
+            text: this.xAxisEnum[this.xAxis]
+          }
+        },
+        yAxis: {
+          title: {
+            text: this.yAxisEnum[this.yAxis]
+          }
+        },
+        point: {},
+        label: {
+          // 如果是 avg ，保留两位；如果是 ratio ，加入百分号；如果是 sum ，直接显示整数
+          // text 是data列表中的某个Object，item 是每个点的数据，index 是索引
+          formatter: (text, item, index) => {
+            if (this.yAxis === 'avg') {
+              return text.avg.toFixed(2) + '分'
+            } else if (this.yAxis === 'ratio') {
+              return (text.ratio * 100).toFixed(2) + '%'
+            } else if (this.yAxis === 'sum') {
+              return text.sum + '分'
+            }
+          }
+        }
       })
       this.plot = line
       line.render()
     },
-    updateYAxis() {
+    updatePlot(data, xField, yField, seriesField) {
+      this.$log.debug('updatePlot() data: ', data)
+      this.$log.debug('updatePlot() xField: ', xField)
+      this.$log.debug('updatePlot() xField: ', yField)
+      this.plot.update({
+        data: data,
+        xField: xField,
+        yField: yField,
+        seriesField: seriesField,
+        xAxis: {
+          title: {
+            text: this.xAxisEnum[this.xAxis]
+          }
+        },
+        yAxis: {
+          title: {
+            text: this.yAxisEnum[this.yAxis]
+          }
+        }
+      })
+    },
+    updateGraph() {
       if (this.yAxis === 'avg' || this.yAxis === 'sum') {
-        this.plot.update({
-          data: this.graphList[this.xAxis],
-          xField: 'milestone',
-          yField: this.yAxis
-        })
+        this.updatePlot(this.graphList[this.xAxis], 'milestone', this.yAxis, '')
       } else if (this.yAxis === 'ratio') {
         let data = []
         this.graphList[this.xAxis].forEach(item => {
@@ -140,23 +189,8 @@ export default {
             type: 'neg'
           })
         })
-        this.$log.debug('updateYAxis data: ', data)
-        this.plot.update({
-          data: data,
-          xField: 'milestone',
-          yField: 'ratio',
-          seriesField: 'type'
-        })
+        this.updatePlot(data, 'milestone', 'ratio', 'type')
       }
-    },
-    updateXAxis() {
-      this.plot.update(
-        {
-          data: this.graphList[this.xAxis],
-          xField: 'milestone',
-          yField: this.yAxis
-        })
-      this.updateYAxis()
     }
   }
 }
@@ -172,11 +206,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.button-container {
-    display: flex;
-    justify-content: flex-end;
 }
 
 el-form-item {
