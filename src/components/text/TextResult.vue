@@ -1,43 +1,29 @@
 <template>
-  <el-card class='card' shadow='hover'>
-    <template #header>
-      <div class='card-header'>
-        <div class='icon-text'>
-          <font-awesome-icon class='icon' icon='fa-solid fa-table' />
-          <span>分析结果</span>
-        </div>
-        <slot name='button'></slot>
-      </div>
+  <card>
+    <template #icon-text>
+      <font-awesome-icon class='icon' icon='fa-solid fa-table' />
+      <span>分析结果</span>
     </template>
-    <slot name='table'></slot>
+    <template #header>
+      <slot name='button'></slot>
+    </template>
+    <template #body>
+      <slot name='table'></slot>
+    </template>
+  </card>
 
-  </el-card>
 </template>
 
 <script>
+import Card from '@/components/common/Card.vue'
+
 export default {
-  name: 'AnalyseResult.vue'
+  name: 'AnalyseResult.vue',
+  components: { Card }
 }
 </script>
-
 <style scoped>
-.card {
-    margin: 1rem 0;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.icon-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon-text span {
+span {
     flex: 1;
     min-width: 100px;
     text-align: center;

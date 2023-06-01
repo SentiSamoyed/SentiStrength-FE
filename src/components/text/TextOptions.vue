@@ -100,16 +100,16 @@ export default {
           'noBoosters': false,
           'noNegatingPositiveFlipsEmotion': false,
           'noNegatingNegativeNeutralisesEmotion': false,
-            'negatedWordStrengthMultiplier': 0.5,
-            'maxWordsBeforeSentimentToNegate': 0,
-            'noIdioms': false,
-            'questionsReduceNeg': false,
-            'noEmoticons': false,
-            'exclamations2': false,
-            'mood': 0,
-            'noMultiplePosWords': false,
-            'noMultipleNegWords': false,
-            'noIgnoreBoosterWordsAfterNegatives': false,
+          'negatedWordStrengthMultiplier': 0.5,
+          'maxWordsBeforeSentimentToNegate': 0,
+          'noIdioms': false,
+          'questionsReduceNeg': false,
+          'noEmoticons': false,
+          'exclamations2': false,
+          'mood': 0,
+          'noMultiplePosWords': false,
+          'noMultipleNegWords': false,
+          'noIgnoreBoosterWordsAfterNegatives': false,
             'noDictionary': false,
             'noDeleteExtraDuplicateLetters': false,
             'illegalDoubleLettersInWordMiddle': 'ahijkquvxyz',
@@ -133,6 +133,12 @@ export default {
 <style scoped>
 el-form-item {
     width: 200px;
+}
+
+span {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
 }
 
 .checkboxes {

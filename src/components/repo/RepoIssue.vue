@@ -1,111 +1,108 @@
 <template>
-
-  <el-card class='card' shadow='hover'>
-    <template #header>
-      <div class='card-header'>
-        <div class='icon-text'>
-          <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
-          <span>项目 Issues</span>
-        </div>
-      </div>
+  <card>
+    <template #icon-text>
+      <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+      <span>项目 Issues</span>
     </template>
+    <template #body>
+      <el-form :model='form' label-width='200px'>
+        <el-form-item label='排序方向'>
 
-    <el-form :model='form' label-width='200px'>
-      <el-form-item label='排序方向'>
-
-        <el-select
-          v-model='this.form.direction'
-          placeholder='请选择排序方向'
-          @change='this.getRepoIssue()'
-        >
-          <el-option
-            v-for='(label, value) in this.directionEnum'
-            :key='value'
-            :label='label'
-            :value='value'
+          <el-select
+            v-model='this.form.direction'
+            placeholder='请选择排序方向'
+            @change='this.getRepoIssue()'
           >
-          </el-option>
-        </el-select>
+            <el-option
+              v-for='(label, value) in this.directionEnum'
+              :key='value'
+              :label='label'
+              :value='value'
+            >
+            </el-option>
+          </el-select>
 
-      </el-form-item>
-      <el-form-item label='排序依据'>
-        <el-select
-          v-model='this.form.sortBy'
-          placeholder='请选择排序依据'
-          @change='this.getRepoIssue()'
-        >
-          <el-option
-            v-for='(label, value) in this.sortByEnum'
-            :key='value'
-            :label='label'
-            :value='value'
+        </el-form-item>
+        <el-form-item label='排序依据'>
+          <el-select
+            v-model='this.form.sortBy'
+            placeholder='请选择排序依据'
+            @change='this.getRepoIssue()'
           >
-          </el-option>
-        </el-select>
-      </el-form-item>
+            <el-option
+              v-for='(label, value) in this.sortByEnum'
+              :key='value'
+              :label='label'
+              :value='value'
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
 
-      <el-form-item label='Issue 状态'>
-        <el-select
-          v-model='this.form.state'
-          placeholder='请选择 Issue 状态'
-          @change='this.getRepoIssue()'
-        >
-          <el-option
-            v-for='(label, value) in this.stateEnum'
-            :key='value'
-            :label='label'
-            :value='value'
+        <el-form-item label='Issue 状态'>
+          <el-select
+            v-model='this.form.state'
+            placeholder='请选择 Issue 状态'
+            @change='this.getRepoIssue()'
           >
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </el-form>
+            <el-option
+              v-for='(label, value) in this.stateEnum'
+              :key='value'
+              :label='label'
+              :value='value'
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
 
-    <el-table v-loading='loading' :data='this.issueList' :table-layout='"auto"' height='600px'>
-      <el-table-column type='expand'>
-        <template #default='scope'>
-          <el-descriptions>
-            <el-descriptions-item :span='24' label='Body'>
-            </el-descriptions-item>
-          </el-descriptions>
-          <span>
-              {{ scope.row.body }}
-              </span>
-        </template>
-      </el-table-column>
-      <el-table-column label='Issue 编号' prop='issueNumber' width='100px'></el-table-column>
+      <el-table v-loading='loading' :data='this.issueList' :table-layout='"auto"' height='600px'>
+        <el-table-column type='expand'>
+          <template #default='scope'>
+            <el-descriptions>
+              <el-descriptions-item :span='24' label='Body'>
+                <el-button size='small' type='success'>
+                  显示 Body 内容
+                </el-button>
+                {{ scope.row.body }}
+              </el-descriptions-item>
+            </el-descriptions>
+          </template>
+        </el-table-column>
+        <el-table-column label='Issue 编号' prop='issueNumber' width='100px'></el-table-column>
 
-      <el-table-column label='链接' width='80'>
-        <template #default='scope'>
-          <!--          <el-link :underline='false' :href='scope.row.htmlUrl' target='_blank'>打开链接</el-link>-->
-          <el-button size='small' type='success' @click='openUrl(scope.row.htmlUrl)'>
-            打开
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label='标题' prop='title'></el-table-column>
-      <el-table-column label='作者' prop='author' width='150px'></el-table-column>
-      <el-table-column label='状态' prop='state' width='100px'></el-table-column>
-      <el-table-column label='情感值' prop='scaleVal' width='100px'></el-table-column>
-    </el-table>
+        <el-table-column label='链接' width='80'>
+          <template #default='scope'>
+            <!--          <el-link :underline='false' :href='scope.row.htmlUrl' target='_blank'>打开链接</el-link>-->
+            <el-button size='small' type='success' @click='openUrl(scope.row.htmlUrl)'>
+              打开
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label='标题' prop='title'></el-table-column>
+        <el-table-column label='作者' prop='author' width='150px'></el-table-column>
+        <el-table-column label='状态' prop='state' width='100px'></el-table-column>
+        <el-table-column label='情感值' prop='scaleVal' width='100px'></el-table-column>
+      </el-table>
 
-
-    <el-pagination
-      v-model:current-page.sync='this.form.page'
-      :page-count='this.pageCount'
-      :page-size='this.pageSize'
-      layout='prev, pager, next, jumper'
-      @update:current-page='this.getRepoIssue()'
-    />
-
-  </el-card>
+      <el-pagination
+        v-model:current-page.sync='this.form.page'
+        :page-count='this.pageCount'
+        :page-size='this.pageSize'
+        layout='prev, pager, next, jumper'
+        @update:current-page='this.getRepoIssue()'
+      />
+    </template>
+  </card>
 </template>
 
 <script>
 import apis from '@/apis'
+import Card from '@/components/common/Card.vue'
 
 export default {
   name: 'RepoIssue',
+  components: { Card },
   mounted() {
     this.currRepo = this.$parent.$data.repo
     this.getRepoIssue()
@@ -173,29 +170,12 @@ export default {
 </script>
 
 <style scoped>
-.card {
-    margin: 1rem 0;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 el-form-item {
     width: 200px;
 }
 
-
-.icon-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0;
-}
-
-.icon-text span {
+span {
     min-width: 100px;
     text-align: center;
 }

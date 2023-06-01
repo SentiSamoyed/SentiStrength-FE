@@ -1,104 +1,97 @@
 <template>
-  <el-card class='card' shadow='hover'>
-    <template #header>
-      <div class='card-header'>
-        <div class='icon-text'>
-          <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
-          <span>项目分值</span>
-        </div>
-      </div>
+  <card>
+    <template #icon-text>
+      <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+      <span>项目分值</span>
     </template>
-
-
-    <el-form :model='form'>
-      <el-form-item label='版本' label-width='35%'>
-        <el-select
-          v-model='this.form.selectedTags'
-          multiple
-          filterable
-          clearable
-          collapse-tags
-          collapse-tags-tooltip
-          placeholder='请选择版本'
-          @change='getRepoScore'
-        >
-          <template #prefix>
-            <font-awesome-icon icon='fa-solid fa-code-compare' />
-          </template>
-          <el-option
-            v-for='item in this.versions'
-            :key='item.value'
-            :label='item.label'
-            :value='item.value'
+    <template #body>
+      <el-form :model='form'>
+        <el-form-item label='版本' label-width='35%'>
+          <el-select
+            v-model='this.form.selectedTags'
+            clearable
+            collapse-tags
+            collapse-tags-tooltip
+            filterable
+            multiple
+            placeholder='请选择版本'
+            @change='getRepoScore'
           >
-            <span style='float: left'>{{ item.label }}</span>
-            <span
-              style='
+            <template #prefix>
+              <font-awesome-icon icon='fa-solid fa-code-compare' />
+            </template>
+            <el-option
+              v-for='item in this.versions'
+              :key='item.value'
+              :label='item.label'
+              :value='item.value'
+            >
+              <span style='float: left'>{{ item.label }}</span>
+              <span
+                style='
           float: right;
           color: var(--el-text-color-secondary);
           font-size: 13px;
         '
-            >{{ item.time }}</span
-            >
-          </el-option>
-        </el-select>
-      </el-form-item>
-    </el-form>
+              >{{ item.time }}</span
+              >
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div class='statistics'>
+        <el-row justify='space-evenly'>
+          <el-col :span='4'></el-col>
+          <el-col :span='4'>
+            <el-statistic :value='this.repoTotal.count' precision='0' title='总条目数' />
+          </el-col>
+          <el-col :span='4'>
+            <el-statistic :value='this.repoTotal.avg' precision='2'>
+              <template #title>
+                <div style='display: inline-flex; align-items: center'>
+                  平均分值
+                </div>
+              </template>
+            </el-statistic>
 
+          </el-col>
+          <el-col :span='4'>
+            <el-statistic :value='this.repoTotal.sum' precision='0' title='分值总和' />
+          </el-col>
+          <el-col :span='4'></el-col>
+        </el-row>
+        <el-row justify='space-evenly'>
+          <el-col :span='4'>
+            <el-statistic :value='this.repoTotal.posCnt' precision='0' title='正向分值总数' />
+          </el-col>
+          <el-col :span='4'>
+            <el-statistic :value='this.repoTotal.posRatio * 100' precision='2' suffix='%' title='正向分值占比' />
+          </el-col>
+        </el-row>
+        <el-row justify='space-evenly'>
+          <el-col :span='4'>
+            <el-statistic :value='this.repoTotal.negCnt' precision='0' title='负向分值总数' />
+          </el-col>
+          <el-col :span='4'>
+            <el-statistic :value='this.repoTotal.negRatio * 100' precision='2' suffix='%' title='负向分值占比' />
+          </el-col>
+        </el-row>
 
-    <div class='statistics'>
-      <el-row justify='space-evenly'>
-        <el-col :span='4'></el-col>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.count' precision='0' title='总条目数' />
-        </el-col>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.avg' precision='2'>
-            <template #title>
-              <div style='display: inline-flex; align-items: center'>
-                平均分值
-              </div>
-            </template>
-          </el-statistic>
-
-        </el-col>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.sum' precision='0' title='分值总和' />
-        </el-col>
-        <el-col :span='4'></el-col>
-      </el-row>
-      <el-row justify='space-evenly'>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.posCnt' precision='0' title='正向分值总数' />
-        </el-col>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.posRatio * 100' precision='2' suffix='%' title='正向分值占比' />
-        </el-col>
-      </el-row>
-      <el-row justify='space-evenly'>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.negCnt' precision='0' title='负向分值总数' />
-        </el-col>
-        <el-col :span='4'>
-          <el-statistic :value='this.repoTotal.negRatio * 100' precision='2' suffix='%' title='负向分值占比' />
-        </el-col>
-      </el-row>
-    </div>
-
-    <div id='pie-container' />
-
-  </el-card>
-
+      </div>
+      <div id='pie-container' />
+    </template>
+  </card>
 </template>
 
 <script>
 import apis from '@/apis'
 import { Pie } from '@antv/g2plot'
 import { InfoFilled } from '@element-plus/icons-vue'
+import Card from '@/components/common/Card.vue'
 
 export default {
   name: 'RepoScore',
-  components: { InfoFilled },
+  components: { Card, InfoFilled },
   data() {
     return {
       currRepo: {
@@ -271,31 +264,11 @@ export default {
 </script>
 
 <style scoped>
-.card {
-    margin: 1rem 0;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.el-col {
-    text-align: center;
-}
-
 el-form-item {
     width: 200px;
 }
 
-.icon-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon-text span {
+span {
     flex: 1;
     min-width: 100px;
     text-align: center;

@@ -34,13 +34,6 @@ el-form-item {
     width: 200px;
 }
 
-.checkboxes {
-    margin: 1rem;
-}
-
-.checkbox {
-    width: 200px;
-}
 
 .icon-text {
     display: flex;

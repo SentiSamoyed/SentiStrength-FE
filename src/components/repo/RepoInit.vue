@@ -1,55 +1,57 @@
 <template>
-  <el-card class='card' shadow='hover'>
+  <card>
+    <template #icon-text>
+      <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
+      <span>初始化项目</span>
+    </template>
+
     <template #header>
-      <div class='card-header'>
-        <div class='icon-text'>
-          <font-awesome-icon class='icon' icon='fa-solid fa-sliders' />
-          <span>初始化项目</span>
+      <div v-if='loading' class='icon-line'>
+        <div class='icon'>
+          <el-icon class='is-loading'>
+            <Loading />
+          </el-icon>
         </div>
-        <div v-if='loading' class='icon-line'>
-          <div class='icon'>
-            <el-icon class='is-loading'>
-              <Loading />
-            </el-icon>
-          </div>
-          <div class='progress-line'>
-            <el-progress :format='() => ``' :indeterminate='true' :percentage='50' />
-          </div>
+        <div class='progress-line'>
+          <el-progress :format='() => ``' :indeterminate='true' :percentage='50' />
         </div>
       </div>
     </template>
 
-    <el-form ref='form' :model='form' :rules='formRules'>
-      <el-form-item label='项目名称' label-width='35%' prop='selectedRepoName'>
-        <el-autocomplete
-          v-model='form.selectedRepoName'
-          :fetch-suggestions='querySearch'
-          placeholder='请输入项目名称'
-          clearable
-        >
-          <template #prefix>
-            <font-awesome-icon icon='fa-solid fa-search' />
-          </template>
-        </el-autocomplete>
+    <template #body>
+      <el-form ref='form' :model='form' :rules='formRules'>
+        <el-form-item label='项目名称' label-width='35%' prop='selectedRepoName'>
+          <el-autocomplete
+            v-model='form.selectedRepoName'
+            :fetch-suggestions='querySearch'
+            clearable
+            placeholder='请输入项目名称'
+          >
+            <template #prefix>
+              <font-awesome-icon icon='fa-solid fa-search' />
+            </template>
+          </el-autocomplete>
 
-      </el-form-item>
-    </el-form>
+        </el-form-item>
+      </el-form>
 
+      <div class='button-container'>
+        <el-button type='primary' @click='initRepo()'>下一步</el-button>
+      </div>
+    </template>
+  </card>
 
-    <div class='button-container'>
-      <el-button type='primary' @click='initRepo()'>下一步</el-button>
-    </div>
-  </el-card>
 </template>
 
 <script>
 
 import apis from '@/apis'
 import { Loading } from '@element-plus/icons-vue'
+import Card from '@/components/common/Card.vue'
 
 export default {
   name: 'RepoInit',
-  components: { Loading },
+  components: { Card, Loading },
   data() {
     return {
       form: {
@@ -190,16 +192,6 @@ export default {
 }
 </script>
 <style scoped>
-.card {
-    margin: 1rem 0;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .button-container {
     display: flex;
     justify-content: flex-end;
@@ -209,33 +201,14 @@ el-form-item {
     width: 200px;
 }
 
-.checkboxes {
-    margin: 1rem;
-}
-
-.checkbox {
-    width: 200px;
-}
-
-.icon-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0;
-}
-
-.icon-text span {
-    min-width: 100px;
-    text-align: center;
-}
-
 .progress-line {
     width: 20rem;
 }
 
-.icon {
-    display: flex;
-    margin-right: 0.5rem;
+span {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
 }
 
 .icon-line {
