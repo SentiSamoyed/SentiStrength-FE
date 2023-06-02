@@ -84,30 +84,24 @@ export default {
             text: '时间'
           }
         },
-        yAxis: {
-          title: {
-            text: '评论数量'
+          yAxis: {
+            title: {
+              text: '评论数量'
+            }
+          },
+          seriesField: 'version',
+          point: {},
+          label: {
+            // formatter: (text, item) => {
+            //   return text.aspect
+            // },
+            // autoHide: true,
+          },
+          tooltip: {
+            fields: ['xField', 'yField', 'aspect']
           }
-        },
-        seriesField: 'version',
-        point: {}
-        // label: {
-        // text 是data列表中的某个Object，item 是每个点的数据，index 是索引
-        // formatter: (text, item, index) => {
-        //   if (this.yAxis === 'avg') {
-        //     return text.avg.toFixed(2)
-        //   } else if (this.yAxis === 'ratio') {
-        //     return (text.ratio * 100).toFixed(2) + '%'
-        //   } else if (this.yAxis === 'sum') {
-        //     return text.sum
-        //   }
-        // }
-        // },
-        // slider: {
-        //   start: 0.1,
-        //   end: 0.9
-        // }
-      })
+        }
+      )
       this.plot = line
       line.render()
 
