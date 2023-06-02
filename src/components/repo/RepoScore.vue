@@ -4,6 +4,13 @@
       <font-awesome-icon icon='fa-solid fa-star-half-stroke' />
       <span>项目分值</span>
     </template>
+    <template #header>
+      <el-button
+        type='primary'
+        @click='selectAllTags'>
+        全选
+      </el-button>
+    </template>
     <template #body>
       <el-form :model='form'>
         <el-form-item label='版本' label-width='35%'>
@@ -38,6 +45,8 @@
             </el-option>
           </el-select>
         </el-form-item>
+
+
       </el-form>
       <div class='statistics'>
         <el-row justify='space-evenly'>
@@ -149,12 +158,20 @@ export default {
           })
         })
       }
+      this.selectAllTags()
     }).catch(err => {
       this.$message.error('获取仓库版本异常: ' + err)
     })
-
   },
   methods: {
+    selectAllTags() {
+      // 默认选择所有tag
+      this.form.selectedTags = []
+      this.versions.forEach(version => {
+        this.form.selectedTags.push(version.value)
+      })
+      this.getRepoScore()
+    },
     getRepoScore() {
       let selectedTags = this.form.selectedTags
       // 对 release tags 进行排序
