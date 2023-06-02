@@ -60,9 +60,9 @@
         <el-table-column label='详细信息' type='expand' width='100'>
           <template #default='scope'>
             <el-descriptions column='2' style='padding: 0 3rem'>
-              <el-descriptions-item label='创建时间'>{{ new Date(scope.row.createdAt).toDateString() }}
+              <el-descriptions-item label='创建时间'>{{ new Date(scope.row.createdAt).toLocalDateStrig() }}
               </el-descriptions-item>
-              <el-descriptions-item label='修改时间'>{{ new Date(scope.row.updatedAt).toDateString() }}
+              <el-descriptions-item label='修改时间'>{{ new Date(scope.row.updatedAt).toLocalDateStrig() }}
               </el-descriptions-item>
               <el-descriptions-item label='评论数量'>{{ scope.row.comments }}</el-descriptions-item>
               <el-descriptions-item :span='24' label='Body 内容'>

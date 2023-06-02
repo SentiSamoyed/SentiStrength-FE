@@ -102,6 +102,7 @@ export default {
         selectedTags: []
       },
       releases: [],
+      tagTimeMap: {},
       versions: [],
       repoTotal: {
         sum: 0,
@@ -122,25 +123,28 @@ export default {
 
     apis.getRepoReleases(this.currRepo.owner, this.currRepo.name).then(res => {
       let releases = res.data.data
-
+      releases.push({
+        tagName: 'No release',
+        createdAt: new Date().getTime()
+      })
       this.$log.debug('getRepoReleases: ', releases)
       this.releases = releases
+
+      // 生成 tag -> time 的 map
+      releases.forEach(release => {
+        this.tagTimeMap[release.tagName] = release.createdAt
+      })
+
       if (releases.length !== 0) {
         releases.reverse()
         releases.forEach(release => {
           this.versions.push({
             label: release.tagName,
             value: release.tagName,
-            time: new Date(release.createdAt).toDateString()
+            time: new Date(release.createdAt).toLocaleDateString()
           })
         })
       }
-      //   加入 No release Tag 到版本列表最后面
-      this.versions.push({
-        label: 'No release Tag',
-        value: 'No release Tag',
-        time: 'Repo Created Date'
-      })
     }).catch(err => {
       this.$message.error('获取仓库版本异常: ' + err)
     })
@@ -148,31 +152,46 @@ export default {
   },
   methods: {
     getRepoScore() {
-      let releaseTags = this.form.selectedTags
-      apis.getRepoTotal(this.currRepo.owner, this.currRepo.name, releaseTags).then(res => {
+      let selectedTags = this.form.selectedTags
+      // 对 release tags 进行排序
+      selectedTags.sort((a, b) => {
+        return this.tagTimeMap[a] - this.tagTimeMap[b]
+      })
+      apis.getRepoTotal(this.currRepo.owner, this.currRepo.name, selectedTags).then(res => {
         let data = res.data.data
         Object.keys(this.repoTotal).forEach(key => {
-          this.repoTotal[key] = data[key]
+          this.repoTotal[key] = data[key] === 'NaN' ? 0 : data[key]
         })
         this.$log.debug('getRepoScore() repoTotal: ', this.repoTotal)
       }).catch(err => {
         this.$message.error('请求失败: ' + err)
       })
-      this.updatePieData()
+      this.updatePieData(selectedTags)
     },
-    async updatePieData() {
-      let tags = this.form.selectedTags
-      this.$log.debug('first tag: ', tags[0])
-      this.$log.debug('last tag: ', tags[tags.length - 1])
+    getFromTo(tags) {
       let from = 0, to = 0
-      for (const release in this.releases) {
-        if (this.releases[release].tagName === tags[0]) {
-          to = this.releases[release].createdAt
-        }
-        if (this.releases[release].tagName === tags[tags.length - 1]) {
-          from = this.releases[release].createdAt
+      if (tags.length !== 0) {
+        if (tags.length === 1 && tags[0] === 'No release') {
+          to = new Date().getTime()
+        } else {
+          let fromTag = tags[0]
+          let toTag = tags[tags.length - 1]
+          from = this.tagTimeMap[fromTag]
+          let toTagIndex = this.releases.findIndex(release => release.tagName === toTag)
+          // 如果是最后一个 tag, 则 to 为当前时间，否则为下一个 tag 的时间
+          toTagIndex = toTagIndex < 1 ? toTagIndex : toTagIndex - 1
+          to = this.tagTimeMap[this.releases[toTagIndex].tagName]
         }
       }
+      console.log('from: ', from)
+      console.log('to', to)
+      return [from, to]
+    },
+    async updatePieData(tags) {
+      let fromTo = this.getFromTo(tags)
+      let from = fromTo[0]
+      let to = fromTo[1]
+
       this.$log.debug('timestamp from: ', from)
       this.$log.debug('timestamp to: ', to)
       await apis.getRepoPieChart(this.currRepo.owner, this.currRepo.name, from, to).then(res => {

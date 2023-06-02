@@ -18,7 +18,7 @@
             {{ this.repoInfo.htmlUrl }}
           </el-link>
         </el-descriptions-item>
-        <el-descriptions-item label='上次更新时间'>{{ new Date(this.repoInfo.lastUpdate).toDateString() }}
+        <el-descriptions-item label='上次更新时间'>{{ new Date(this.repoInfo.lastUpdate).toLocaleDateString() }}
         </el-descriptions-item>
       </el-descriptions>
     </template>
