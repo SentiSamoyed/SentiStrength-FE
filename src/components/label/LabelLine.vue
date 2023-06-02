@@ -91,12 +91,7 @@ export default {
           },
           seriesField: 'version',
           point: {},
-          label: {
-            // formatter: (text, item) => {
-            //   return text.aspect
-            // },
-            // autoHide: true,
-          },
+          label: {},
           tooltip: {
             fields: ['xField', 'yField', 'aspect']
           }
