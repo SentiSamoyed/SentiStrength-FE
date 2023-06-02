@@ -78,6 +78,8 @@
         </el-row>
 
       </div>
+
+
       <div id='pie-container' />
     </template>
   </card>
@@ -123,9 +125,10 @@ export default {
 
     apis.getRepoReleases(this.currRepo.owner, this.currRepo.name).then(res => {
       let releases = res.data.data
-      releases.push({
+      // 加入 release 开头
+      releases.unshift({
         tagName: 'No release',
-        createdAt: new Date().getTime()
+        createdAt: 0
       })
       this.$log.debug('getRepoReleases: ', releases)
       this.releases = releases
@@ -137,6 +140,7 @@ export default {
 
       if (releases.length !== 0) {
         releases.reverse()
+        // 展示 versions 选择框
         releases.forEach(release => {
           this.versions.push({
             label: release.tagName,
@@ -169,22 +173,27 @@ export default {
       this.updatePieData(selectedTags)
     },
     getFromTo(tags) {
-      let from = 0, to = 0
-      if (tags.length !== 0) {
-        if (tags.length === 1 && tags[0] === 'No release') {
-          to = new Date().getTime()
-        } else {
-          let fromTag = tags[0]
-          let toTag = tags[tags.length - 1]
-          from = this.tagTimeMap[fromTag]
-          let toTagIndex = this.releases.findIndex(release => release.tagName === toTag)
-          // 如果是最后一个 tag, 则 to 为当前时间，否则为下一个 tag 的时间
-          toTagIndex = toTagIndex < 1 ? toTagIndex : toTagIndex - 1
-          to = this.tagTimeMap[this.releases[toTagIndex].tagName]
-        }
+      if (tags.length === 1 && tags[0] === 'No release') {
+        return [0, new Date().getTime()]
       }
-      console.log('from: ', from)
-      console.log('to', to)
+      let from = 0, to = 0
+      let fromTag = '', toTag = ''
+      if (tags.length > 1) {
+        fromTag = tags[0]
+        toTag = tags[tags.length - 1]
+        from = this.tagTimeMap[fromTag]
+        let toTagIndex = this.releases.findIndex(release => release.tagName === toTag)
+        // 如果是最后一个 tag, 则 to 为当前时间，否则为下一个 tag 的时间
+        toTagIndex = toTagIndex < 1 ? toTagIndex : toTagIndex - 1
+        to = this.tagTimeMap[this.releases[toTagIndex].tagName]
+      } else if (tags.length === 1) {
+        fromTag = tags[0]
+        toTag = 'Now'
+        from = this.tagTimeMap[fromTag]
+        to = new Date().getTime()
+      }
+      console.log('tag from: ', fromTag, new Date(from).toLocaleDateString())
+      console.log('tag to: ', toTag, new Date(to).toLocaleDateString())
       return [from, to]
     },
     async updatePieData(tags) {
@@ -261,19 +270,6 @@ export default {
           },
           tooltip: {},
           interactions: [{ type: 'element-active' }]
-          // innerRadius: 0.4,
-          // statistic: {
-          //   title: {
-          //     offsetY: -10,
-          //     style: { fontSize: '14px' },
-          //     formatter: () => '总数量'
-          //   },
-          //   content: {
-          //     offsetY: 10,
-          //     style: { fontSize: '20px' },
-          //     formatter: () => `${this.pieDataCnt} 个`
-          //   }
-          // }
         })
         this.plot.render()
       }
