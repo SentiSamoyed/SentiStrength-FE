@@ -34,9 +34,16 @@ export default {
   name: 'RepoInfo',
   components: { Card },
   mounted() {
-    this.currRepo = this.$parent.$data.repo
+    this.repo = this.$parent.$data.repo
     this.loading = true
-    apis.getRepoInfo(this.currRepo.owner, this.currRepo.name).then(res => {
+    apis.getRepoInfo(this.repo.owner, this.repo.name).then(res => {
+      let data = res.data.data
+      this.$log.debug('Get repo info: ', data)
+      // 如果 lastUpdate 为 null，则需要重新调用 init api
+      if (data.lastUpdate === null) {
+        apis.initRepo(this.repo.owner, this.repo.name)
+        this.$message.warning({ message: '项目需要重新初始化，请稍后再来...', duration: 5000 })
+      }
       this.repoInfo = res.data.data
     }).catch(err => {
       this.$message.error('获取仓库信息异常: ' + err)
@@ -46,7 +53,7 @@ export default {
   },
   data() {
     return {
-      currRepo: {
+      repo: {
         owner: '',
         name: ''
       },

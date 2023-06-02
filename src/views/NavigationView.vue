@@ -25,7 +25,7 @@
       <font-awesome-icon class='icon' icon='fa-brands fa-github' />
       <span>项目分析</span>
     </el-menu-item>
-    <el-sub-menu class='sub-menu'>
+    <el-sub-menu class='sub-menu' index='/label'>
       <template #title>
         <div class='sub-menu-title'>
           <font-awesome-icon class='icon' icon='fa-solid fa-tags' />

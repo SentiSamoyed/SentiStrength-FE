@@ -117,7 +117,6 @@ export default {
       // 已初始化
       if (initialized) {
         this.setParentRepo()
-        this.$message.success('该项目已经初始化')
         return
       }
 
