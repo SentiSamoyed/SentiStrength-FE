@@ -1,0 +1,785 @@
+[
+  {
+    "id": "0",
+    "aspect": "broker",
+    "volume": "28",
+    "sentiment": "0.8571428571428571",
+    "size": "4.189347367318061",
+    "body": "@duhenglucky  same problem!  use rocketmq-spring-boot-starter��2.1.0������broker�� version is 4.7.1��1 master 2 slave dleger![image](https://user-images.githubusercontent.com/32673188/164237484-c8e6c978-eb3b-4c20-a3ca-ca42a342e31c.png)",
+    "": ""
+  },
+  {
+    "id": "1",
+    "aspect": "consumer",
+    "volume": "14",
+    "sentiment": "0.5714285714285714",
+    "size": "3.21048590104383",
+    "body": "\"You said \"\"there will still be other consumers repeatedly consuming the message\"\"",
+    "": ""
+  },
+  {
+    "id": "2",
+    "aspect": "message",
+    "volume": "10",
+    "sentiment": "0.4",
+    "size": "2.702585092994046",
+    "body": "\"No, It's not a problem, message will be resend to other broke in method ��DefaultMQProducerImpl��#��sendDefaultImpl��.\"",
+    "": ""
+  },
+  {
+    "id": "3",
+    "aspect": "log",
+    "volume": "9",
+    "sentiment": "0.6666666666666666",
+    "size": "2.863891244002886",
+    "body": "\"Can you provide more log? For example, retry ��failure logs��, and check whether ��broker_default.log�� has more abnormal log.\"",
+    "": ""
+  },
+  {
+    "id": "4",
+    "aspect": "producer",
+    "volume": "8",
+    "sentiment": "0.625",
+    "size": "2.7044415416798357",
+    "body": "\"I reproduce this bug, the root cause is that ��producer�� is blocked when it receive a reply message . The blocking code is as fellow:![image](https://user-images.githubusercontent.com/31175234/156995063-bbc550e3-1c30-4719-8b1a-c2e3125f9f78.png)There are relationships with ��bornHost�� and ��storeHost�� of reply message.```xmlbornHost=/127.0.0.1:59653, storeHost=/127.0.0.1:10911```will be blocked.```xmlbornHost=127.0.0.1:59653, storeHost=127.0.0.1:10911```will not.\"",
+    "": ""
+  },
+  {
+    "id": "5",
+    "aspect": "rip",
+    "volume": "7",
+    "sentiment": "0.7142857142857143",
+    "size": "2.6601958633410274",
+    "body": "\"Hi, @Cczzzz ��RIP-33�� has occupied by [RocketMQ MQTT](https://github.com/apache/rocketmq/wiki/RIP-33-RocketMQ-MQTT), ��RIP-34�� has occupied by [Support quorum write and adaptive degradation in master slave architecture](https://github.com/apache/rocketmq/wiki/RIP-34-Support-quorum-write-and-adaptive-degradation-in-master-slave-architecture). If you want to start a ��RIP��, you should start a [DISCUSS] thread on the Apache RocketMQ dev mailing list firstly. You can refer https://github.com/apache/rocketmq/wiki/RocketMQ-Improvement-Proposal\"",
+    "": ""
+  },
+  {
+    "id": "6",
+    "aspect": "timeout",
+    "volume": "7",
+    "sentiment": "0.2857142857142857",
+    "size": "2.231624434769599",
+    "body": "\"There may be a problem with my computer itself",
+    "": ""
+  },
+  {
+    "id": "7",
+    "aspect": "topic",
+    "volume": "7",
+    "sentiment": "0.7142857142857143",
+    "size": "2.6601958633410274",
+    "body": "�������·�ʽ�����ˣ���broker����������Ϣ������󳤶�65536���ͻ������ò�ѹ����Ϣ�塣������Ϣbody����Ϊ64756��userProperties����Լ440��tag����28��key����44��������£��������ͳɹ���![image](https://user-images.githubusercontent.com/31175234/166911233-346fa41a-0afb-4644-91d2-fce2d1405f38.png)����ʧ�ܺ�sendback���ȳ�����![image](https://user-images.githubusercontent.com/31175234/166911393-e5765fed-7e32-4758-9e08-05552dba2f46.png)�����ӳ���Ϣ�ɹ���![image](https://user-images.githubusercontent.com/31175234/166911591-9b2eeb55-92d9-4393-a60f-0c9885d4cf74.png)�ӳ���Ϣ��schedule ��topic��д��������topic��ʧ�ܣ�![image](https://user-images.githubusercontent.com/31175234/166911719-7d4ae250-f4af-4e74-b8c3-be604f886c1d.png)�ӳ���Ϣһֱд����־�������ϴ�ӡ����broker����������Ȼ��ӡ��![image](https://user-images.githubusercontent.com/31175234/166911896-ca927d8e-462d-4d73-b4c3-923c4e67cc63.png)",
+    "": ""
+  },
+  {
+    "id": "8",
+    "aspect": "config",
+    "volume": "6",
+    "sentiment": "0.5",
+    "size": "2.291759469228055",
+    "body": "\"This is distinguished by ��brokerClusterName��, maybe your ��configuration�� is wrong.It is recommended to use brokerClusterName-brokerName as the naming format of brokerName for easy viewing\"",
+    "": ""
+  },
+  {
+    "id": "9",
+    "aspect": "nameserver",
+    "volume": "5",
+    "sentiment": "1.0",
+    "size": "2.6094379124341005",
+    "body": "\"If the two clusters are not related, use different ��namesrv�� is better. Otherwise, a different broker name is recommended.\"",
+    "": ""
+  },
+  {
+    "id": "10",
+    "aspect": "mappedfile",
+    "volume": "4",
+    "sentiment": "0.5",
+    "size": "1.8862943611198906",
+    "body": "\"@ni-ze If the ��mappedFile�� occur exception is not the one which is creating, it cause the ��mappedFile�� is creating return null, is this correct? Please review the second picture above. Is the scenario correct?\"",
+    "": ""
+  },
+  {
+    "id": "11",
+    "aspect": "client",
+    "volume": "4",
+    "sentiment": "0.5",
+    "size": "1.8862943611198906",
+    "body": "\"��Ҳ�������������, ��version 4.9.2��org.apache.rocketmq.client.exception.��MQClientException��: Send [3] times, still failed, cost [30078]ms, Topic: rocketmq-cluster_REPLY_TOPIC, BrokersSent: [broker-b, broker-a, broker-b]Caused by: org.apache.rocketmq.client.exception.MQBrokerException: CODE: 1 DESC: push reply message to 10.172.237.01@PRODUCER_RPC_REQUEST_ec988ea0d28f11eca5ac724e1f4167f8fail. BROKER: 10.172.237.02:10911\"",
+    "": ""
+  },
+  {
+    "id": "12",
+    "aspect": "method",
+    "volume": "4",
+    "sentiment": "0.75",
+    "size": "2.136294361119891",
+    "body": "\"> I see the note in DefaultMQProducerImpl.java may not exactly��bacause the version is larger than 4.4.0��but it is not removed��it may be confused�� ![image](https://user-images.githubusercontent.com/11631097/163341030-7271e319-2304-410e-9f2a-a9fe7d4b660d.png)I think the ��method�� really needs to be optimized, and I am considering doing it.\"",
+    "": ""
+  },
+  {
+    "id": "13",
+    "aspect": "index",
+    "volume": "4",
+    "sentiment": "0.5",
+    "size": "1.8862943611198906",
+    "body": "\"��IndexCount�� defaults to 1, so this is fine��I close the issue\"",
+    "": ""
+  },
+  {
+    "id": "14",
+    "aspect": "linux",
+    "volume": "4",
+    "sentiment": "0.25",
+    "size": "1.6362943611198906",
+    "body": "\"I tested this method",
+    "": ""
+  },
+  {
+    "id": "15",
+    "aspect": "variable",
+    "volume": "3",
+    "sentiment": "0.0",
+    "size": "1.0986122886681098",
+    "body": "\"@aaron-ai What is the variable ��roundNum�� mean? Is the variable entireSpace can replace  variable totalSpace?I don't understand this ��code��, can you give me some pointers?\"",
+    "": ""
+  },
+  {
+    "id": "16",
+    "aspect": "batch",
+    "volume": "3",
+    "sentiment": "0.6666666666666666",
+    "size": "1.7652789553347765",
+    "body": "\"I want to send messages in ��batches��, and implement ��queue segmentation�� according to a certain attribute, so as to realize the implementation order of the same value of the attribute, that is, the sequential consumption when consuming\"",
+    "": ""
+  },
+  {
+    "id": "17",
+    "aspect": "queue",
+    "volume": "3",
+    "sentiment": "0.0",
+    "size": "1.0986122886681098",
+    "body": "> send batch orderLyMessageThe ��batch�� sends to the same ��queue��?",
+    "": ""
+  },
+  {
+    "id": "18",
+    "aspect": "container",
+    "volume": "3",
+    "sentiment": "1.0",
+    "size": "2.09861228866811",
+    "body": "\"@RongtongJin Hello, here are some examples based on testcontainer, do you want to introduce something similar to KafkaContainer for user brokers to run in ��containers�� to reduce losses?https://github.com/apache/flink/commit/ce9cfced5df0b557625018d7267bae5fcd04f40c\"",
+    "": ""
+  },
+  {
+    "id": "19",
+    "aspect": "exception",
+    "volume": "3",
+    "sentiment": "1.0",
+    "size": "2.09861228866811",
+    "body": "\"��Ҳ�������������, ��version 4.9.2��org.apache.rocketmq.client.exception.��MQClientException��: Send [3] times, still failed, cost [30078]ms, Topic: rocketmq-cluster_REPLY_TOPIC, BrokersSent: [broker-b, broker-a, broker-b]Caused by: org.apache.rocketmq.client.exception.MQBrokerException: CODE: 1 DESC: push reply message to 10.172.237.01@PRODUCER_RPC_REQUEST_ec988ea0d28f11eca5ac724e1f4167f8fail. BROKER: 10.172.237.02:10911\"",
+    "": ""
+  },
+  {
+    "id": "20",
+    "aspect": "offset",
+    "volume": "3",
+    "sentiment": "1.0",
+    "size": "2.09861228866811",
+    "body": "\"> > If the new leader has a smaller ��offset�� of the queue",
+    "": ""
+  },
+  {
+    "id": "21",
+    "aspect": "storehost",
+    "volume": "3",
+    "sentiment": "0.6666666666666666",
+    "size": "1.7652789553347765",
+    "body": "\"I reproduce this bug, the root cause is that ��producer�� is blocked when it receive a reply message . The blocking code is as fellow:![image](https://user-images.githubusercontent.com/31175234/156995063-bbc550e3-1c30-4719-8b1a-c2e3125f9f78.png)There are relationships with ��bornHost�� and ��storeHost�� of reply message.```xmlbornHost=/127.0.0.1:59653, storeHost=/127.0.0.1:10911```will be blocked.```xmlbornHost=127.0.0.1:59653, storeHost=127.0.0.1:10911```will not.\"",
+    "": ""
+  },
+  {
+    "id": "22",
+    "aspect": "decoder",
+    "volume": "3",
+    "sentiment": "1.3333333333333333",
+    "size": "2.431945622001443",
+    "body": "\"I add some logs to describe the bug**RocketMQ version: 4.9.3****The message I QueryMsgTraceById has a sub trace and a pub trace**### QueryMessageProcessor![image](https://user-images.githubusercontent.com/19700253/167563462-8696a10b-1f33-40bb-9774-d9962de58593.png)### QueryMessageTransfer![image](https://user-images.githubusercontent.com/19700253/167563697-48d6ed58-e1fb-432f-b80f-7521f48b83bc.png)### FileRegionEncoder![image](https://user-images.githubusercontent.com/19700253/167563788-75113861-ed18-4c9e-975e-25fafc6667f5.png)### NettyDecoder![image](https://user-images.githubusercontent.com/19700253/167563848-e04df9e8-5891-4ab7-889f-e6ce956b9c48.png)### Console log:![image](https://user-images.githubusercontent.com/19700253/167564898-f0e40e86-78a1-40c9-b42d-8db9b60ef8e6.png)The `[QueryMessageProcessor] total bytes: 1021` indicate that 1021 bytes should be transferred, and `[QueryMessageProcessor] message count: 2` indicate that 2 messages was found. `[QueryMessageTransfer] header total bytes: 1017` 1017 is the length of data used by LengthFieldBasedFrameDecoder, in QueryMessageTransfer, the header is 193 bytes but 256 transferred, and the first message is 378 bytes but 1024 transferred, 1280(capacity 256 + capacity 1024) is greater than 1021, so the 2nd message will not be transferred, in actual, 571(header 193 + 1st message 378) bytes is transferred,  but LengthFieldBasedFrameDecoder should get 1021 bytes### NettyDecoder log![image](https://user-images.githubusercontent.com/19700253/167567367-c3003354-e7cc-4068-825e-597f8c1d6b86.png)��NettyDecoder�� get 571 bytes, and no more byte transferred.\"",
+    "": ""
+  },
+  {
+    "id": "23",
+    "aspect": "clienthost",
+    "volume": "3",
+    "sentiment": "0.0",
+    "size": "1.0986122886681098",
+    "body": "\"@lizhiboo not append ��bean.getStoreHost()�� or ��getClientHost()��If there is no ��storeHost��, there should have ��clientHost��\"",
+    "": ""
+  },
+  {
+    "id": "24",
+    "aspect": "tag",
+    "volume": "2",
+    "sentiment": "0.5",
+    "size": "1.1931471805599454",
+    "body": "A large number of different ��tags�� is not recommended. A large number of different tags can mean a large number of different ��subscribers��. A larger number of subscribers can have an impact on ��broker�� performance.",
+    "": ""
+  },
+  {
+    "id": "25",
+    "aspect": "interface",
+    "volume": "2",
+    "sentiment": "0.0",
+    "size": "0.6931471805599453",
+    "body": "\"I do not get your point, ��AllocateMessageQueueStrategy�� interface could used to implement nearby routing.\"",
+    "": ""
+  },
+  {
+    "id": "26",
+    "aspect": "command",
+    "volume": "2",
+    "sentiment": "0.0",
+    "size": "0.6931471805599453",
+    "body": "\"use updateTopic command to change read queue num or write queue num of topic, such as fellow:```javash bin/mqadmin updateTopic -n 1xxx -c xxx -t  %RETRY%xxxx -r 2 -w 2```��updateSubGroup��command also effective, but this command is against group. It need you delete retry-topic firstly and wait created by consumer heat beat.\"",
+    "": ""
+  },
+  {
+    "id": "27",
+    "aspect": "mqhelper",
+    "volume": "2",
+    "sentiment": "0.5",
+    "size": "1.1931471805599454",
+    "body": "\"@ni-ze @lizhiboo is there anything else we have to do alongwith removing thispublic class ��MQHelper�� {    public static void resetOffsetByTimestamp(        final MessageModel messageModel",
+    "": ""
+  },
+  {
+    "id": "28",
+    "aspect": "concurrency",
+    "volume": "2",
+    "sentiment": "0.0",
+    "size": "0.6931471805599453",
+    "body": "\"@Cczzzz ��Out of range�� is a serious problem, it will cause abnormal repetition from the min offset.So it is not ok to skip it.The better way is to improve the dispatch performance.In fact, the 5.0 will use ��multi-threads�� to do the dispatch, which will gain much performance.\"",
+    "": ""
+  },
+  {
+    "id": "29",
+    "aspect": "deprecated",
+    "volume": "2",
+    "sentiment": "0.0",
+    "size": "0.6931471805599453",
+    "body": "\"@RishiKumarRay @caigy I think we can add @��deprecated�� on this class, then removed after several versions.\"",
+    "": ""
+  },
+  {
+    "id": "30",
+    "aspect": "latency",
+    "volume": "2",
+    "sentiment": "1.0",
+    "size": "1.6931471805599454",
+    "body": "\"@cserwen @lwcloverAs described in google's paper ��GFS��,  the side effect of ��zero-copy�� is that if the data is not in page cache, the page fault and disk reading(usually called cold data) will hang the netty thread.Which will cause delays in all requests.For MQ, Keeping low ��latency�� of sending is very important, so for ��latency-sensitive applications��, it is not suggested to use zero copy by default. \"",
+    "": ""
+  },
+  {
+    "id": "31",
+    "aspect": "synchronized",
+    "volume": "2",
+    "sentiment": "0.5",
+    "size": "1.1931471805599454",
+    "body": "\"@ni-ze The read-thread maybe get unexpected value, instread of the latest value.  Details in [jdk document](https://github.com/openjdk/jdk/blob/280aa428800043f314b92ae88076d596cb4c2fe0/src/java.base/share/classes/java/util/HashMap.java#L89).>Note that this implementation is not ��synchronized��. If multiple threads access a hash map concurrently, and at least one of the threads modifies the map structurally, it must be synchronized externally.\"",
+    "": ""
+  },
+  {
+    "id": "32",
+    "aspect": "charset",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"#4024 this Issue is for PR Replace ��Charset��.forName(\"\"UTF-8\"\") with Standard��Charset��s.UTF_8 #4024\"",
+    "": ""
+  },
+  {
+    "id": "33",
+    "aspect": "restore",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "@ni-ze so do i ��restore�� the file and add @deprecated",
+    "": ""
+  },
+  {
+    "id": "34",
+    "aspect": "consistent",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"In the case of master-slave synchronous replication, MQ believes that this is the highest level of ��persistence��, and requires that the master and slave data be strictly ��consistent��. If the slave broker is downtime, the return result of sending a message is that SLAVE_NOT_AVAILABLE, and the business needs to be based on its own situation to decide to how to proceed it. When the SDK internally processes the return value of a transaction message, MQ strictly handles it according to the logic of failure if it is not SEND_OK by default, ensuring that the ��master and slave brokers�� are in a strictly consistent state, and directly rolling back the local transaction messages.any other suggestions for handling here?\"",
+    "": ""
+  },
+  {
+    "id": "35",
+    "aspect": "subscribers",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "A large number of different ��tags�� is not recommended. A large number of different tags can mean a large number of different ��subscribers��. A larger number of subscribers can have an impact on ��broker�� performance.",
+    "": ""
+  },
+  {
+    "id": "36",
+    "aspect": "bornhost",
+    "volume": "1",
+    "sentiment": "2.0",
+    "size": "2.0",
+    "body": "\"I reproduce this bug, the root cause is that ��producer�� is blocked when it receive a reply message . The blocking code is as fellow:![image](https://user-images.githubusercontent.com/31175234/156995063-bbc550e3-1c30-4719-8b1a-c2e3125f9f78.png)There are relationships with ��bornHost�� and ��storeHost�� of reply message.```xmlbornHost=/127.0.0.1:59653, storeHost=/127.0.0.1:10911```will be blocked.```xmlbornHost=127.0.0.1:59653, storeHost=127.0.0.1:10911```will not.\"",
+    "": ""
+  },
+  {
+    "id": "37",
+    "aspect": "asynchronous",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"Every time the data is written, it will be forced, and the disk io pressure will be relatively large, so it needs to be changed to this ��asynchronous����and 5.0 has been modified to ��mappedbytebuffer�� \"",
+    "": ""
+  },
+  {
+    "id": "38",
+    "aspect": "code",
+    "volume": "1",
+    "sentiment": "2.0",
+    "size": "2.0",
+    "body": "\"> I am very interested in this. How is the current progress? Is there something can get involved inalmost done, the ��code�� will be pushed soon. \"",
+    "": ""
+  },
+  {
+    "id": "39",
+    "aspect": "callback",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"@HScarb Skip the message will cause message loss.The root cause of this problem is the infinite recursion of handleResult().PutResultProcess.thenProcess  is like the below:```            this.future.thenAccept(result -> {                this.handleResult(result);            });```The core problem is when to call the \"\"thenAccept \"\".If the \"\"thenAccept\"\"  is called by the background thread(for example",
+    "": ""
+  },
+  {
+    "id": "40",
+    "aspect": "mqadmin",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "using ��mqadmin�� tool ? Can you provide examples? @RongtongJin",
+    "": ""
+  },
+  {
+    "id": "41",
+    "aspect": "instancename",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "��InstanceName�� is optional unless multiple consumers are started within a process",
+    "": ""
+  },
+  {
+    "id": "42",
+    "aspect": "pop",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "@lizhiboo  @duhenglucky  It looks like implementing seconds delay messages is important for ��POP��",
+    "": ""
+  },
+  {
+    "id": "43",
+    "aspect": "zero-copy",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"@cserwen @lwcloverAs described in google's paper ��GFS��,  the side effect of ��zero-copy�� is that if the data is not in page cache, the page fault and disk reading(usually called cold data) will hang the netty thread.Which will cause delays in all requests.For MQ, Keeping low ��latency�� of sending is very important, so for ��latency-sensitive applications��, it is not suggested to use zero copy by default. \"",
+    "": ""
+  },
+  {
+    "id": "44",
+    "aspect": "data",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"in fact we have more ��data��.* A. remove SO_SNDBUF/SO_RCVBUF/WRITE_BUFFER_WATER_MARK setting* B. set SO_SNDBUF/SO_RCVBUF, not set WRITE_BUFFER_WATER_MARK (same as 4.9.2)* C. set SO_SNDBUF/SO_RCVBUF/WRITE_BUFFER_WATER_MARK* D. remove SO_SNDBUF/SO_RCVBUF, set WRITE_BUFFER_WATER_MARKThe full rocketmq remoting ping test result[Remoting.pdf](https://github.com/apache/rocketmq/files/8022269/Remoting.pdf)\"",
+    "": ""
+  },
+  {
+    "id": "45",
+    "aspect": "thread",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"I do not think so.```javatpInfo.getSendWhichQueue().incrementAndGet()```the ��index�� is a thread local variable, would change with thread.if ��thread�� switched, ��index�� will change.\"",
+    "": ""
+  },
+  {
+    "id": "46",
+    "aspect": "retry-queue",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"> Given that only the retry topic has this problem, using SubscriptionGroupConfig to decide which queue to send, and another way can also solve this problem, such as, updateTopic update read and write queue num first then use updateSubGroup change retry queue num in SubscriptionGroupConfig, so no modification is recommended.ok, it looks a way to change ��retry-queue��, but it's looks complex and unconventional, so maybe it's better to add this rule to best-practice??\"",
+    "": ""
+  },
+  {
+    "id": "47",
+    "aspect": "windows",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "windows ����Ӧ���ǡ�kernel32.dll����VirtualLock�Ŷ԰ɣ�",
+    "": ""
+  },
+  {
+    "id": "48",
+    "aspect": "fix",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"@qq958905365 Could you describe the detailed ��use case��? Why do need to add a broker to a ��running cluster��?In fact, I used to think this op is not practical.It is better to ��fix�� the replica number during the deployment.\"",
+    "": ""
+  },
+  {
+    "id": "49",
+    "aspect": "pods",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"ok, thks�� i will check.And i also want to ask another question,  they two problem seems to cause  the same behavior��  when some of ��pods�� crashes down for a while in k8s cluster due to vm problem��then recovered, application worked fine, but the ��message�� in this ��broker�� become more and more,  cost a very long time to catch up the offset as other ��broker��.  Event increasing quantities of��pods��,  it just cannot solve the message accumulation. Is there any possible or better solutions about this .  We already encountered this problem several times.\"",
+    "": ""
+  },
+  {
+    "id": "50",
+    "aspect": "endtime",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"IMO, using ��deliverTime�� as ��endTime�� has no effect to pop function, the blue message that is still in SCHEDULE_XXX topic will be delivered to retry topic in advance. The key problem is using deliverTime or ��storeTime�� as the end time point using for ��udging timeout��.\"",
+    "": ""
+  },
+  {
+    "id": "51",
+    "aspect": "stream",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"��Stream�� is a totally different scenario compared with messaging. As I know, Many companies in industries develop rocketmq proxy to manage and distribute traffic. It is helpful to mark ��stream requests�� explicitly for traffic management and scalability like proxy scenarios.\"",
+    "": ""
+  },
+  {
+    "id": "52",
+    "aspect": "profile",
+    "volume": "1",
+    "sentiment": "2.0",
+    "size": "2.0",
+    "body": "old ��profile��![image](https://user-images.githubusercontent.com/33629004/152953564-5af592e0-98f8-41e6-9ea4-fade304e0271.png)new profile![image](https://user-images.githubusercontent.com/33629004/152953248-0d003ba7-d38e-4627-8494-607f7778fbf4.png)��benchmark result�� as below. (command: sh tproducer.sh -n xxx.xxx.xxx.xxx:9876 -s 128 -w 64 -sr 0 -su 0 -cu 0 -cr 0 -i 0)old![image](https://user-images.githubusercontent.com/33629004/152965364-1337677d-0453-4367-bcab-6e9b8682fadc.png)new![image](https://user-images.githubusercontent.com/33629004/152967124-d1d3694b-3d11-4304-bd84-18c7eb4ea5c3.png)",
+    "": ""
+  },
+  {
+    "id": "53",
+    "aspect": "dledger",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"Hi, I have added some code to support ��Container�� in `��DLedger��` mode. Can I submit a pr directly under this issue?:-D @RongtongJin\"",
+    "": ""
+  },
+  {
+    "id": "54",
+    "aspect": "document",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"> @zergduan @sunxi92 I will check the following list before submitting my pr, please feel free to tell me if any is missing: Test cases should cover the following circumstances:>> 1. Only `conf/plain_acl.yml` exists;> 2. Only `/conf/acl/plain_acl.yml` exists: In my pr, an empty `conf/plain_acl.yml` would be created, so it is the same as the next circumstance;> 3. Both `conf/plain_acl.yml` and `/conf/acl/plain_acl.yml` exists>> In each of the above circumstance, check:>> * use admin command to view and modify ACL, including global white addresses and account authorities;> * modify ACL config file directly, and the acl would be refreshed correctly> * check producing and consuming messages with ACLI think we can consider the scenarion that the ��acl configuration�� only have globalWhiteRemoteAddresses or accounts.In addition, we can explain in the ��documentation�� what the tools.yml file does and how you need to set the user in the tools.yml file to admin in the acl configuration.\"",
+    "": ""
+  },
+  {
+    "id": "55",
+    "aspect": "mmap",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"> @cserwen @lwclover As described in google's paper GFS, the side effect of zero-copy is that if the data is not in page cache, the page fault and disk reading(usually called cold data) will hang the netty thread. Which will cause delays in all requests.>> For MQ, Keeping low ��latency�� of sending is very important, so for latency-sensitive applications, it is not suggested to use zero copy by default.Used ��mmap��, the page fault and disk reading still exist. \"",
+    "": ""
+  },
+  {
+    "id": "56",
+    "aspect": "responseconsumer",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "�о��Ǻͻ��������йأ����ǲ���ȷ��������ʲôԭ�����׼�Ⱥ�ֱ���������������������ȫһ���ġ�����һ��û�����⣬����һ���Ǳ��ֵ����⡣ֱ������Դ�������� example/rpc/ �ġ�RequestProducer�� �� ��ResponseConsumer�� ���ɸ������⡣��������������ͼ���һ�µġ�",
+    "": ""
+  },
+  {
+    "id": "57",
+    "aspect": "consumequeue",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"> @Cczzzz Out of range is a serious problem, it will cause abnormal repetition from the min offset.>> So it is not ok to skip it.>> The better way is to improve the dispatch performance.>> In fact, the 5.0 will use multi-threads to do the dispatch, which will gain much performance.It will appear that the ��offset�� submitted by the client is greater than the ��consmequeue�� max offset ��so ��broker�� think it's illegal��starter from min offset. \"",
+    "": ""
+  },
+  {
+    "id": "58",
+    "aspect": "messge",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"> ```java>     int writeQueueNums = tpInfo.getQueueIdByBroker(notBestBroker);>    ...>     mq.setBrokerName(notBestBroker);>     mq.setQueueId(tpInfo.getSendWhichQueue().incrementAndGet() % writeQueueNums);> ```>> a messageQueue's brokerName and queueId is consistent, because writeQueueNums is belong to the same brokerName, which is notBestBroker in this case.no, that is not my mean , you are right in some aspect,but what i want to say is  ��messagequeue�� it self is a shared object , it means all threads will use the same messageQueue object, for current thread, the messageQueue is consistent,but for other thread, it may not  be consistent ,`org.apache.rocketmq.client.impl.producer.TopicPublishInfo#selectOneMessageQueue() ````java    public MessageQueue selectOneMessageQueue() {        int index = this.sendWhichQueue.getAndIncrement();        int pos = Math.abs(index) % this.messageQueueList.size();        if (pos < 0)            pos = 0;        return this.messageQueueList.get(pos);    }```this method will not sure it`s return value(messageQueue) is always belong to ��notBestBroker����so the ��method�� may be return a mq from brokerA or brokerB ,etc .for example, when this.sendWhichQueue is too big to becoming a number less than zero, the pos will be zero, and'return this.messageQueueList.get(pos); 'will return a messageQueue object which may not belong to notBestBroker\"",
+    "": ""
+  },
+  {
+    "id": "59",
+    "aspect": "filter",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "@caigy ��rocketmq-filter�� seems has a guava dependency and appears to use guava code (imports like com.google.common.cache.Cache).https://github.com/apache/rocketmq/blob/develop/filter/pom.xml#L41https://github.com/apache/rocketmq/blob/develop/filter/src/main/java/org/apache/rocketmq/filter/parser/SelectorParser.java#L21",
+    "": ""
+  },
+  {
+    "id": "60",
+    "aspect": "version",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "���� ��������������ս������������ͬ�����⡣�汾��v4.9.2��",
+    "": ""
+  },
+  {
+    "id": "61",
+    "aspect": "jdk",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "getting this issue with ��jdk-18.0.1��",
+    "": ""
+  },
+  {
+    "id": "62",
+    "aspect": "deploy",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "https://github.com/apache/rocketmq-dashboard  You can ��deploy�� this service to manage your ��cluster��.",
+    "": ""
+  },
+  {
+    "id": "63",
+    "aspect": "constructor",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"> ![1649761765(1)](https://user-images.githubusercontent.com/42512469/162947438-82a56beb-a899-4022-a7ee-17f44a65d154.png)>> mq.setBrokerName(notBestBroker); mq.setQueueId(tpInfo.getSendWhichQueue().getAndIncrement() % writeQueueNums);>> this method of ��selectOneMessageQueue�� is executed by multiThread when send a message but the mq (messageQueue) is a shared object , thread A modify it`s ��brokerName�� to brokerB,but have not modify it queueId, still 1 , then thread B send msg and use this queue,but now,this queue `s brokerName is brokerB but it`s queueId is 1, in this case , wo can`t sure that brokerB really have queue which queueId is 1>> Isn't that really a problem?I think you are right, to be more precise, ��constructors�� should be used.\"",
+    "": ""
+  },
+  {
+    "id": "64",
+    "aspect": "problem",
+    "volume": "1",
+    "sentiment": "2.0",
+    "size": "2.0",
+    "body": "\"> ```> 2018-04-27 11:11:00 WARN PullMessageThread_12 - Offset for /alidata/store/committ> log/00000000001073741824 not matched. Request offset: 7858421, index: -1, mappedd> FileSize: 1073741824, mappedFiles count: 1> 2018-04-27 11:11:00 WARN PullMessageThread_21 - findMappedFileByOffset failure.> java.lang.ArrayIndexOutOfBoundsException: -1>         at java.util.concurrent.CopyOnWriteArrayList.get(CopyOnWriteArrayList.jaa> va:387) ~[na:1.8.0_45]>         at java.util.concurrent.CopyOnWriteArrayList.get(CopyOnWriteArrayList.jaa> va:396) ~[na:1.8.0_45]>         at org.apache.rocketmq.store.MappedFileQueue.findMappedFileByOffset(Mappp> edFileQueue.java:478) ~[rocketmq-store-4.2.0.jar:4.2.0]>         at org.apache.rocketmq.store.CommitLog.getMessage(CommitLog.java:817) [rr> ocketmq-store-4.2.0.jar:4.2.0]>         at org.apache.rocketmq.store.DefaultMessageStore.getMessage(DefaultMessaa> geStore.java:538) [rocketmq-store-4.2.0.jar:4.2.0]>         at org.apache.rocketmq.broker.processor.PullMessageProcessor.processRequu> est(PullMessageProcessor.java:236) [rocketmq-broker-4.2.0.jar:4.2.0]>         at org.apache.rocketmq.broker.processor.PullMessageProcessor.processRequu> est(PullMessageProcessor.java:81) [rocketmq-broker-4.2.0.jar:4.2.0]>         at org.apache.rocketmq.remoting.netty.NettyRemotingAbstract$1.run(NettyRR> emotingAbstract.java:178) [rocketmq-remoting-4.2.0.jar:4.2.0]>         at org.apache.rocketmq.remoting.netty.RequestTask.run(RequestTask.java:88> 0) [rocketmq-remoting-4.2.0.jar:4.2.0]> ```i have the same ��problem�� , has it been solved? @smthing\"",
+    "": ""
+  },
+  {
+    "id": "65",
+    "aspect": "gfs",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"@cserwen @lwcloverAs described in google's paper ��GFS��,  the side effect of ��zero-copy�� is that if the data is not in page cache, the page fault and disk reading(usually called cold data) will hang the netty thread.Which will cause delays in all requests.For MQ, Keeping low ��latency�� of sending is very important, so for ��latency-sensitive applications��, it is not suggested to use zero copy by default. \"",
+    "": ""
+  },
+  {
+    "id": "66",
+    "aspect": "timestamp",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"the ck&ak delay ��timestamp�� is both popTime + invisibleTime��ck can always see ak , only  client will ack the msg  in invisibleTime.https://github.com/apache/rocketmq/blob/a17fa7605cfbd266e4468e6fe2d6cf6711572111/broker/src/main/java/org/apache/rocketmq/broker/processor/AckMessageProcessor.java#L175\"",
+    "": ""
+  },
+  {
+    "id": "67",
+    "aspect": "cluster",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "https://github.com/apache/rocketmq-dashboard  You can ��deploy�� this service to manage your ��cluster��.",
+    "": ""
+  },
+  {
+    "id": "68",
+    "aspect": "requestproducer",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "�о��Ǻͻ��������йأ����ǲ���ȷ��������ʲôԭ�����׼�Ⱥ�ֱ���������������������ȫһ���ġ�����һ��û�����⣬����һ���Ǳ��ֵ����⡣ֱ������Դ�������� example/rpc/ �ġ�RequestProducer�� �� ��ResponseConsumer�� ���ɸ������⡣��������������ͼ���һ�µġ�",
+    "": ""
+  },
+  {
+    "id": "69",
+    "aspect": "environment",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "Multiple experimental ��environments�� need to consider.",
+    "": ""
+  },
+  {
+    "id": "70",
+    "aspect": "delivertime",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"IMO, using ��deliverTime�� as ��endTime�� has no effect to pop function, the blue message that is still in SCHEDULE_XXX topic will be delivered to retry topic in advance. The key problem is using deliverTime or ��storeTime�� as the end time point using for ��udging timeout��.\"",
+    "": ""
+  },
+  {
+    "id": "71",
+    "aspect": "performance",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "> A large number of different tags is not recommended. A large number of different tags can mean a large number of different subscribers. A larger number of subscribers can have an impact on broker performance.I've done this in a ��production environment�� before and it does have an impact on ��performance��.",
+    "": ""
+  },
+  {
+    "id": "72",
+    "aspect": "persistence",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"In the case of master-slave synchronous replication, MQ believes that this is the highest level of ��persistence��, and requires that the master and slave data be strictly ��consistent��. If the slave broker is downtime, the return result of sending a message is that SLAVE_NOT_AVAILABLE, and the business needs to be based on its own situation to decide to how to proceed it. When the SDK internally processes the return value of a transaction message, MQ strictly handles it according to the logic of failure if it is not SEND_OK by default, ensuring that the ��master and slave brokers�� are in a strictly consistent state, and directly rolling back the local transaction messages.any other suggestions for handling here?\"",
+    "": ""
+  },
+  {
+    "id": "73",
+    "aspect": "judgment",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"> IMO, using deliverTime as endTime has no effect to pop function, the blue message that is still in SCHEDULE_XXX topic will be delivered to retry topic in advance. The key problem is using deliverTime or storeTime as the end time point using for judging timeout.@lizhiboo I think this works, if this endtime is true, the ��judgment�� on ��recovery�� here will take effect,https://github.com/apache/rocketmq/blob/631405e2fba8849f9bce5e275825aa16944b8097/broker/src/main/java/org/apache/rocketmq/broker/processor/PopReviveService.java#L344\"",
+    "": ""
+  },
+  {
+    "id": "74",
+    "aspect": "listenablefuture",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"Actually we considered about `��ListenableFuture��`, unfortunately it doesn't belong to the standard library. On the other side **user will use `Producer#sendAsync` to publish message directly rather than `DefaultProducer#sendAsync` in their programs**, so the implementation is not the scope of APIs discussion.\"",
+    "": ""
+  },
+  {
+    "id": "75",
+    "aspect": "processqueue",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"��resetOffset�� send a message to let client drop ��processQueue�� and suspend client. If client send a before suspend, it does will overwitten. It happen with a very small probability, you can reset offset again if that happen.\"",
+    "": ""
+  },
+  {
+    "id": "76",
+    "aspect": "response",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"When the ��response�� is returned, it will be automatically cleared, and the client does not need to actively clear.https://github.com/apache/rocketmq/blob/2bd9059016448ebcb0bb1cf64ed944eba98bb38e/remoting/src/main/java/org/apache/rocketmq/remoting/netty/NettyRemotingAbstract.java#L294\"",
+    "": ""
+  },
+  {
+    "id": "77",
+    "aspect": "docker",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"```docker run -d --name huigenamesrv -p 9876:9876 -v namesrv:/home/rocketmq/logs  apache/rocketmq:4.9.2 sh mqnamesrv```As you are not using absolute after `-v`",
+    "": "```Find logs in Source locationReference: https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume\""
+  },
+  {
+    "id": "78",
+    "aspect": "feature",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "> @lizhiboo @duhenglucky It looks like implementing seconds delay messages is important for POP��Timing messages�� have become more and more important ��this ��feature�� is already planned",
+    "": ""
+  },
+  {
+    "id": "79",
+    "aspect": "recovery",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"> IMO, using deliverTime as endTime has no effect to pop function, the blue message that is still in SCHEDULE_XXX topic will be delivered to retry topic in advance. The key problem is using deliverTime or storeTime as the end time point using for judging timeout.@lizhiboo I think this works, if this endtime is true, the ��judgment�� on ��recovery�� here will take effect,https://github.com/apache/rocketmq/blob/631405e2fba8849f9bce5e275825aa16944b8097/broker/src/main/java/org/apache/rocketmq/broker/processor/PopReviveService.java#L344\"",
+    "": ""
+  },
+  {
+    "id": "80",
+    "aspect": "ci/cd",
+    "volume": "1",
+    "sentiment": "2.0",
+    "size": "2.0",
+    "body": "\"Good to see we could embrace new ��CI/CD��architecture. As heng said, we could discuss its possibility and make a detailed transfer plan. You know, We've done a lot of work to adapt to the original architecture, and we hope that future upgrades will be smooth and always housekept by our committers.\"",
+    "": ""
+  },
+  {
+    "id": "81",
+    "aspect": "block",
+    "volume": "1",
+    "sentiment": "2.0",
+    "size": "2.0",
+    "body": "\"> I reproduce this bug, the root cause is that producer is blocked when it receive a reply message . The blocking code is as fellow: ![image](https://user-images.githubusercontent.com/31175234/156995063-bbc550e3-1c30-4719-8b1a-c2e3125f9f78.png) There are relationships with bornHost and storeHost of reply message.>> ```> bornHost=/127.0.0.1:59653, storeHost=/127.0.0.1:10911> ```>> will be blocked.>> ```> bornHost=127.0.0.1:59653, storeHost=127.0.0.1:10911> ```>> will not.```xmlConsumer Started.ConsumeMessageThread_please_rename_unique_group_name_1 Receive New Messages: [MessageExt [brokerName=broker-a, queueId=0, storeSize=291, queueOffset=1, sysFlag=0, bornTimestamp=1646706163408, bornHost=/127.0.0.1:64310, storeTimestamp=1646706163423, storeHost=/127.0.0.1:10911, msgId=7F00000100002A9F000000000000ABF8, commitLogOffset=44024, bodyCRC=198614610, reconsumeTimes=0, preparedTransactionOffset=0, toString()=Message{topic='RequestTopic', flag=0, properties={MIN_OFFSET=0, REPLY_TO_CLIENT=30.250.200.36@78996#328339814781694, MAX_OFFSET=2, CONSUME_START_TIME=1646706163449, UNIQ_KEY=1EFAC824349418B4AAC22646A2CF0000, CLUSTER=DefaultCluster, TTL=3000, CORRELATION_ID=adabf809-ba1a-4187-a6ba-2bbba81439a2}, body=[72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100], transactionId='null'}]]handle message: MessageExt [brokerName=broker-a, queueId=0, storeSize=291, queueOffset=1, sysFlag=0, bornTimestamp=1646706163408, bornHost=/127.0.0.1:64310, storeTimestamp=1646706163423, storeHost=/127.0.0.1:10911, msgId=7F00000100002A9F000000000000ABF8, commitLogOffset=44024, bodyCRC=198614610, reconsumeTimes=0, preparedTransactionOffset=0, toString()=Message{topic='RequestTopic', flag=0, properties={MIN_OFFSET=0, REPLY_TO_CLIENT=30.250.200.36@78996#328339814781694, MAX_OFFSET=2, CONSUME_START_TIME=1646706163449, UNIQ_KEY=1EFAC824349418B4AAC22646A2CF0000, CLUSTER=DefaultCluster, TTL=3000, CORRELATION_ID=adabf809-ba1a-4187-a6ba-2bbba81439a2}, body=[72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100], transactionId='null'}]reply to 30.250.200.36@78996#328339814781694 , SendResult [sendStatus=SEND_OK, msgId=1EFAC824348718B4AAC22646A3070000, offsetMsgId=7F00000100002A9F000000000000AD1B, messageQueue=MessageQueue [topic=DefaultCluster_REPLY_TOPIC, brokerName=broker-a, queueId=0], queueOffset=14]```I change my location from home to  work place, then I can not reproduce this ��block��. example seems work right.\"",
+    "": ""
+  },
+  {
+    "id": "82",
+    "aspect": "libc",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"I agree with you",
+    "": ""
+  },
+  {
+    "id": "83",
+    "aspect": "storetime",
+    "volume": "1",
+    "sentiment": "1.0",
+    "size": "1.0",
+    "body": "\"IMO, using ��deliverTime�� as ��endTime�� has no effect to pop function, the blue message that is still in SCHEDULE_XXX topic will be delivered to retry topic in advance. The key problem is using deliverTime or ��storeTime�� as the end time point using for ��udging timeout��.\"",
+    "": ""
+  },
+  {
+    "id": "84",
+    "aspect": "rpc",
+    "volume": "1",
+    "sentiment": "3.0",
+    "size": "3.0",
+    "body": "\"Great work! Happy to see more users from community get involved in polyglot client development.At the same time, we are planning to implement a brand new C# client based on ��gRPC��, more details will be revealed recently, welcome to stay tuned.\"",
+    "": ""
+  },
+  {
+    "id": "85",
+    "aspect": "msginner",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"IMO it's ok to remove these properties.Instead of removing them after setting into ��msgInner��, it is better to not set them into msgInner from line 315.\"",
+    "": ""
+  },
+  {
+    "id": "86",
+    "aspect": "guava",
+    "volume": "1",
+    "sentiment": "0.0",
+    "size": "0.0",
+    "body": "\"Upgrading ��Guava�� is OK, but it seems that there is no reference to Guava in RocketMQ.\"",
+    "": ""
+  }
+]

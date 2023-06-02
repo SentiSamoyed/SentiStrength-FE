@@ -1,0 +1,368 @@
+[
+  {
+    "xField": 0,
+    "yField": 2,
+    "aspect": "container",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 1,
+    "yField": 1,
+    "aspect": "log",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 4,
+    "yField": 5,
+    "aspect": "Guava",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 5,
+    "yField": 4,
+    "aspect": "MQHelper",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 6,
+    "yField": 5,
+    "aspect": "deprecated",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 7,
+    "yField": 8,
+    "aspect": "broker",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 8,
+    "yField": 7,
+    "aspect": "RIP",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 9,
+    "yField": 1,
+    "aspect": "consumer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 10,
+    "yField": 7,
+    "aspect": "broker",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 12,
+    "yField": 1,
+    "aspect": "document",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 13,
+    "yField": 9,
+    "aspect": "message",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 14,
+    "yField": 4,
+    "aspect": "producer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 15,
+    "yField": 2,
+    "aspect": "block",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 16,
+    "yField": 2,
+    "aspect": "MQAdmin",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 17,
+    "yField": 2,
+    "aspect": "producer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 19,
+    "yField": 2,
+    "aspect": "RIP",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 20,
+    "yField": 6,
+    "aspect": "broker",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 21,
+    "yField": 4,
+    "aspect": "nameserver",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 22,
+    "yField": 3,
+    "aspect": "callback",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 23,
+    "yField": 2,
+    "aspect": "CI/CD",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 24,
+    "yField": 7,
+    "aspect": "mappedFile",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 27,
+    "yField": 1,
+    "aspect": "consumer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 28,
+    "yField": 1,
+    "aspect": "mappedFile",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 29,
+    "yField": 7,
+    "aspect": "topic",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 30,
+    "yField": 10,
+    "aspect": "batch",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 31,
+    "yField": 5,
+    "aspect": "index",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 33,
+    "yField": 4,
+    "aspect": "asynchronous",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 34,
+    "yField": 11,
+    "aspect": "method",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 35,
+    "yField": 8,
+    "aspect": "broker",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 36,
+    "yField": 5,
+    "aspect": "Linux",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 37,
+    "yField": 2,
+    "aspect": "clientHost",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 38,
+    "yField": 7,
+    "aspect": "log",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 39,
+    "yField": 3,
+    "aspect": "consumer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 40,
+    "yField": 2,
+    "aspect": "producer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 41,
+    "yField": 3,
+    "aspect": "decoder",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 43,
+    "yField": 1,
+    "aspect": "",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 44,
+    "yField": 4,
+    "aspect": "consumer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 45,
+    "yField": 2,
+    "aspect": "queue",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 46,
+    "yField": 2,
+    "aspect": "pods",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 48,
+    "yField": 2,
+    "aspect": "decoder",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 49,
+    "yField": 2,
+    "aspect": "RequestProducer",
+    "version": "rocketmq-all-4.9.3"
+  },
+  {
+    "xField": 0,
+    "yField": 4,
+    "aspect": "POP",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 1,
+    "yField": 3,
+    "aspect": "bug",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 2,
+    "yField": 4,
+    "aspect": "POP",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 3,
+    "yField": 2,
+    "aspect": "POP",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 4,
+    "yField": 6,
+    "aspect": "message",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 5,
+    "yField": 1,
+    "aspect": "problem",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 7,
+    "yField": 13,
+    "aspect": "log",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 8,
+    "yField": 5,
+    "aspect": "log",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 9,
+    "yField": 10,
+    "aspect": "config",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 10,
+    "yField": 5,
+    "aspect": "reference",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 11,
+    "yField": 27,
+    "aspect": "synchronized",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 14,
+    "yField": 6,
+    "aspect": "client",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 15,
+    "yField": 2,
+    "aspect": "timeout",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 16,
+    "yField": 8,
+    "aspect": "offset",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 17,
+    "yField": 4,
+    "aspect": "logic",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 18,
+    "yField": 6,
+    "aspect": "messagequeue",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 21,
+    "yField": 1,
+    "aspect": "consumer",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 22,
+    "yField": 8,
+    "aspect": "consumer",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 23,
+    "yField": 6,
+    "aspect": "leadership",
+    "version": "rocketmq-all-4.9.4"
+  },
+  {
+    "xField": 24,
+    "yField": 4,
+    "aspect": "timeout",
+    "version": "rocketmq-all-4.9.4"
+  }
+]
