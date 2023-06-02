@@ -41,6 +41,7 @@ export default {
       this.$log.debug('draw2 data: ', data)
       this.plot = new Scatter('heat-canvas', {
         data,
+        height: 600,
         xField: 'volume',
         yField: 'sentiment',
         shape: 'circle',
@@ -56,6 +57,9 @@ export default {
         },
         yAxis: {
           nice: true,
+          min: -0.5,
+          max: 3.5,
+          tickInterval: 0.5,
           title: {
             text: '情感'
           }
