@@ -36,10 +36,10 @@
         <font-awesome-icon class='icon' icon='fa-solid fa-chart-simple' />
         <span>热力图&折线图</span>
       </el-menu-item>
-      <el-menu-item class='menu-item' index='/label-doc'>
-        <font-awesome-icon class='icon' icon='fa-solid fa-file' />
-        <span>说明</span>
-      </el-menu-item>
+      <!--      <el-menu-item class='menu-item' index='/label-doc'>-->
+      <!--        <font-awesome-icon class='icon' icon='fa-solid fa-file' />-->
+      <!--        <span>说明</span>-->
+      <!--      </el-menu-item>-->
     </el-sub-menu>
   </el-menu>
 </template>
