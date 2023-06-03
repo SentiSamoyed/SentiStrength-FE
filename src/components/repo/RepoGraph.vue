@@ -86,6 +86,10 @@ export default {
         'avg': '平均分值',
         'sum': '分值总和'
       },
+      ratioEnum: {
+        'pos': '正分比例',
+        'neg': '负分比例'
+      },
       xAxis: 'month',
       yAxis: 'avg',
       graphList: {
@@ -147,9 +151,30 @@ export default {
             }
           }
         },
+        legend: {
+          itemName: {
+            formatter: (text) => {
+              if (this.yAxis === 'ratio') {
+                return this.ratioEnum[text]
+              }
+            }
+          }
+        },
+        tooltip: {
+          formatter: (item) => {
+            if (this.yAxis === 'ratio') {
+              return { name: this.ratioEnum[item.type], value: (item.ratio * 100).toFixed(2) + '%' }
+            } else if (this.yAxis === 'sum') {
+              return { name: '分值总和', value: item.sum }
+            } else if (this.yAxis === 'avg') {
+              return { name: '平均分值', value: item.avg.toFixed(2) }
+            }
+
+          }
+        },
         slider: {
-          start: 0.1,
-          end: 0.9
+          start: 0,
+          end: 1
         }
       })
       this.plot = line
